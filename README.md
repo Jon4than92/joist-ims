@@ -1,1 +1,0 @@
-JOIST Inventory Management System
