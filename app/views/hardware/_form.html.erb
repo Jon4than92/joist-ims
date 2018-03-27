@@ -1,0 +1,17 @@
+<%= form_with(model: hardware, local: true) do |form| %>
+  <% if hardware.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(hardware.errors.count, "error") %> prohibited this hardware from being saved:</h2>
+
+      <ul>
+      <% hardware.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

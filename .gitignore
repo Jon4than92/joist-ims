@@ -11,6 +11,3 @@
 /log/*
 !/log/.keep
 /tmp
-
-# Ignore individual files
-/config/local_env.yml

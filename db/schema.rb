@@ -24,14 +24,23 @@ ActiveRecord::Schema.define(version: 11) do
 
   create_table "accounts", force: :cascade do |t|
     t.bigint "employee_id", null: false
-    t.string "email", limit: 75, null: false
-    t.string "password", limit: 75, null: false
     t.bigint "account_type_id", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_type_id"], name: "index_accounts_on_account_type_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["employee_id"], name: "index_accounts_on_employee_id"
+    t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
   create_table "buildings", force: :cascade do |t|
@@ -58,10 +67,10 @@ ActiveRecord::Schema.define(version: 11) do
   end
 
   create_table "employees", force: :cascade do |t|
-    t.string "firstName", limit: 25, null: false
-    t.string "middleInitial", limit: 1, null: false
-    t.string "lastName", limit: 25, null: false
-    t.string "jobTitle", limit: 50, null: false
+    t.string "first_name", limit: 25, null: false
+    t.string "middle_initial", limit: 1, null: false
+    t.string "last_name", limit: 25, null: false
+    t.string "job_title", limit: 50, null: false
     t.bigint "location_id", null: false
     t.string "email", limit: 75, null: false
     t.string "phone", limit: 15, null: false
@@ -76,24 +85,24 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "name", limit: 75, null: false
     t.bigint "manufacturer_id", null: false
     t.integer "year", null: false
-    t.string "modelNum", limit: 50, null: false
-    t.integer "tagNum", null: false
-    t.string "serialNum", limit: 50, null: false
+    t.string "model_num", limit: 50, null: false
+    t.integer "tag_num", null: false
+    t.string "serial_num", limit: 50, null: false
     t.decimal "cost", precision: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
     t.bigint "location_id"
-    t.bigint "assignedTo_id"
-    t.date "assignedDate"
+    t.bigint "assigned_to_id"
+    t.date "assigned_date"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assignedTo_id"], name: "index_hardware_on_assignedTo_id"
+    t.index ["assigned_to_id"], name: "index_hardware_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_hardware_on_custodian_id"
     t.index ["location_id"], name: "index_hardware_on_location_id"
     t.index ["manufacturer_id"], name: "index_hardware_on_manufacturer_id"
-    t.index ["serialNum"], name: "index_hardware_on_serialNum", unique: true
-    t.index ["tagNum"], name: "index_hardware_on_tagNum", unique: true
+    t.index ["serial_num"], name: "index_hardware_on_serial_num", unique: true
+    t.index ["tag_num"], name: "index_hardware_on_tag_num", unique: true
   end
 
   create_table "locations", force: :cascade do |t|
@@ -116,13 +125,13 @@ ActiveRecord::Schema.define(version: 11) do
     t.bigint "vendor_id", null: false
     t.string "version", limit: 50, null: false
     t.integer "year", null: false
-    t.bigint "assignedTo_id"
-    t.date "assignedDate"
+    t.bigint "assigned_to_id"
+    t.date "assigned_date"
     t.bigint "hardware_id"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assignedTo_id"], name: "index_software_on_assignedTo_id"
+    t.index ["assigned_to_id"], name: "index_software_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_software_on_custodian_id"
     t.index ["hardware_id"], name: "index_software_on_hardware_id"
     t.index ["vendor_id"], name: "index_software_on_vendor_id"
@@ -135,18 +144,18 @@ ActiveRecord::Schema.define(version: 11) do
     t.index ["name"], name: "index_vendors_on_name", unique: true
   end
 
-  add_foreign_key "accounts", "account_types"
+  add_foreign_key "accounts", "account_types", on_update: :cascade, on_delete: :restrict
   add_foreign_key "accounts", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "custodians", "custodian_accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "custodians", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "employees", "locations", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "custodians", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "hardware", "employees", column: "assignedTo_id", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "hardware", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "locations", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "manufacturers", on_update: :cascade, on_delete: :restrict
   add_foreign_key "locations", "buildings", on_update: :cascade, on_delete: :cascade
   add_foreign_key "software", "custodians", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "software", "employees", column: "assignedTo_id", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "software", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "hardware", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "vendors"
 end
