@@ -1,10 +1,10 @@
 class CreateEmployees < ActiveRecord::Migration[5.1]
   def change
     create_table :employees do |t|
-      t.string :firstName, limit: 25, null: false
-      t.string :middleInitial, limit: 1, null: false
-      t.string :lastName, limit: 25, null: false
-      t.string :jobTitle, limit: 50, null: false
+      t.string :first_name, limit: 25, null: false
+      t.string :middle_initial, limit: 1, null: false
+      t.string :last_name, limit: 25, null: false
+      t.string :job_title, limit: 50, null: false
       t.references :location, foreign_key: { on_update: :cascade, on_delete: :restrict }, null: false
       t.string :email, limit: 75, null: false
       t.string :phone, limit: 15, null: false

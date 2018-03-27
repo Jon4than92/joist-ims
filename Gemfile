@@ -14,6 +14,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'bcrypt', '~> 3.1.11', platforms: :ruby # Use ActiveModel has_secure_password
 gem 'jquery-rails'
+gem 'devise'
+gem 'activeadmin'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

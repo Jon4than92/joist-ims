@@ -1,0 +1,17 @@
+<%= form_with(model: custodian_account, local: true) do |form| %>
+  <% if custodian_account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(custodian_account.errors.count, "error") %> prohibited this custodian_account from being saved:</h2>
+
+      <ul>
+      <% custodian_account.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
