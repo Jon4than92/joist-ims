@@ -10,7 +10,11 @@ class Employee < ApplicationRecord
     first_name + ' ' + (middle_initial ? middle_initial + ' ' : '') + last_name
   end
 
-  def full_location
-    location.building.name + '.' + location.room
+  def building
+    location.building
+  end
+
+  def room
+    location.room
   end
 end

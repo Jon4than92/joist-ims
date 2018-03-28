@@ -1,8 +1,15 @@
 ActiveAdmin.register Employee do
   permit_params :first_name, :middle_initial, :last_name, :job_title, :email, :phone,
                 locations_attributes: [:id, :room, :_destroy],
+                buildings_attributes: [:id, :name, :_destroy],
                 accounts_atributes: [:id, :employee_id, :account_type_id, :email, :password, :password_confirmation, :_destroy]
   config.sort_order = 'id_desc'
+
+  controller do
+    def scoped_collection
+      end_of_association_chain.includes(:location)
+    end
+  end
 
   index do
     selectable_column
@@ -11,7 +18,8 @@ ActiveAdmin.register Employee do
     column :first_name
     column :email
     column :phone
-    column 'Location', :full_location
+    column 'Building', :building
+    column 'Room', :room
     actions
   end
 
@@ -19,6 +27,8 @@ ActiveAdmin.register Employee do
   filter :last_name
   filter :email
   filter :phone
+  filter :location_room, as: :string, label: 'Room'
+  filter :location_building_name, as: :string, label: 'Building'
 
   form do |f|
     f.inputs do
@@ -30,11 +40,6 @@ ActiveAdmin.register Employee do
       f.input :phone
       f.input :password
       f.input :password_confirmation
-    end
-    f.inputs do
-      f.has_many :locations, heading: false, allow_destroy: true, new_record: true do |a|
-        a.input :room
-      end
     end
     f.actions
   end

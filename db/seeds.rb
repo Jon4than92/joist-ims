@@ -14,7 +14,7 @@ Building.create([
 Location.create([
     { building_id: 1, room: '100A' },
     { building_id: 1, room: '100B' },
-    { building_id: 1, room: '100C' }
+    { building_id: 2, room: '100C' }
 ])
 
 Employee.create([

@@ -7,5 +7,14 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/joist-ims</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="postgres@localhost" uuid="123ce5c2-26bd-46e0-b31c-010563babb68">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <driver-properties>
+        <property name="ApplicationName" value="DataGrip" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>

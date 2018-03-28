@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="joist-ims@localhost">
-  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.1">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.4">
     <root id="1"/>
     <database id="2" parent="1" name="joist-ims">
       <ObjectId>57871</ObjectId>

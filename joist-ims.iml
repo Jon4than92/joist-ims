@@ -37,7 +37,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.11, ruby-2.4.1-p111) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="binding_of_caller (v0.8.0, ruby-2.4.1-p111) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.3, ruby-2.4.1-p111) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.16.1, ruby-2.4.1-p111) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v1.16.0.pre.3, ruby-2.4.1-p111) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="byebug (v10.0.1, ruby-2.4.1-p111) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="capybara (v2.18.0, ruby-2.4.1-p111) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="coffee-rails (v4.2.2, ruby-2.4.1-p111) [gem]" level="application" />
