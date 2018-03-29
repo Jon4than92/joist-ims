@@ -6,15 +6,9 @@ class Employee < ApplicationRecord
   has_many :hardware
   has_many :software
 
+  accepts_nested_attributes_for :account
+
   def full_name
     first_name + ' ' + (middle_initial ? middle_initial + ' ' : '') + last_name
-  end
-
-  def building
-    location.building
-  end
-
-  def room
-    location.room
   end
 end

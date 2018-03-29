@@ -10,11 +10,5 @@
       <user-name>postgres</user-name>
       <introspection-schemas>joist-ims:public</introspection-schemas>
     </data-source>
-    <data-source name="postgres@localhost" uuid="123ce5c2-26bd-46e0-b31c-010563babb68">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
-      <secret-storage>master_key</secret-storage>
-      <first-sync>true</first-sync>
-      <user-name>postgres</user-name>
-    </data-source>
   </component>
 </project>
