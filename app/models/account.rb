@@ -6,4 +6,8 @@ class Account < ApplicationRecord
 
   belongs_to :employee
   belongs_to :account_type
+
+  before_validation do
+    self.email = self.employee.email
+  end
 end

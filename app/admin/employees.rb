@@ -2,7 +2,7 @@ ActiveAdmin.register Employee do
   permit_params :first_name, :middle_initial, :last_name, :job_title, :email, :phone, :location_id,
                 locations_attributes: [:id, :room, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
-                account_attributes: [:id, :account_type_id, :email, :password, :password_confirmation, :_destroy],
+                account_attributes: [:id, :account_type_id, :password, :password_confirmation, :_destroy],
                 account_types_attributes: [:id, :name, :_destroy]
 
   config.sort_order = 'id_desc'
@@ -45,7 +45,6 @@ ActiveAdmin.register Employee do
       f.input :phone
       f.input :location_id, label: 'Location', as: :select, collection: Location.all.map{|u| ["#{u.building.name}.#{u.room}", u.id]}
       f.fields_for :account, Account.new do |a|
-        a.input :email, label: 'Account email'
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}
         a.input :password
         a.input :password_confirmation
