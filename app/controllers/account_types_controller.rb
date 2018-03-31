@@ -56,7 +56,7 @@ class AccountTypesController < ApplicationController
   def destroy
     @account_type.destroy
     respond_to do |format|
-      format.html { redirect_to account_types_url, notice: 'Account type was successfully destroyed.' }
+      format.html { redirect_to account_types_url, notice: 'Account type was successfully deleted.' }
       format.json { head :no_content }
     end
   end

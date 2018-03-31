@@ -1,5 +1,5 @@
 class Employee < ApplicationRecord
-  belongs_to :location
+  belongs_to :room
   has_one :account
   has_many :custodians
   has_many :custodian_accounts, through: :custodians

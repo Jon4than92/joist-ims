@@ -56,7 +56,7 @@ class HardwareController < ApplicationController
   def destroy
     @hardware.destroy
     respond_to do |format|
-      format.html { redirect_to hardware_index_url, notice: 'Hardware was successfully destroyed.' }
+      format.html { redirect_to hardware_index_url, notice: 'Hardware was successfully deleted.' }
       format.json { head :no_content }
     end
   end

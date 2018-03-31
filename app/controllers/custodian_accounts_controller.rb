@@ -56,7 +56,7 @@ class CustodianAccountsController < ApplicationController
   def destroy
     @custodian_account.destroy
     respond_to do |format|
-      format.html { redirect_to custodian_accounts_url, notice: 'Custodian account was successfully destroyed.' }
+      format.html { redirect_to custodian_accounts_url, notice: 'Custodian account was successfully deleted.' }
       format.json { head :no_content }
     end
   end

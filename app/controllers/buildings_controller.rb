@@ -56,7 +56,7 @@ class BuildingsController < ApplicationController
   def destroy
     @building.destroy
     respond_to do |format|
-      format.html { redirect_to buildings_url, notice: 'Building was successfully destroyed.' }
+      format.html { redirect_to buildings_url, notice: 'Building was successfully deleted.' }
       format.json { head :no_content }
     end
   end

@@ -10,7 +10,7 @@ class CreateHardware < ActiveRecord::Migration[5.1]
       t.numeric :cost, precision: 2, null: false
       t.string :condition, limit: 25, null: false
       t.text :notes
-      t.references :location, foreign_key: { on_update: :cascade, on_delete: :nullify }
+      t.references :room, foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.references :assigned_to, references: :employee
       t.date :assigned_date
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }

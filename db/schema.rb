@@ -71,14 +71,14 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "middle_initial", limit: 1, null: false
     t.string "last_name", limit: 25, null: false
     t.string "job_title", limit: 50, null: false
-    t.bigint "location_id", null: false
+    t.bigint "room_id", null: false
     t.string "email", limit: 75, null: false
     t.string "phone", limit: 15, null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_employees_on_email", unique: true
-    t.index ["location_id"], name: "index_employees_on_location_id"
+    t.index ["room_id"], name: "index_employees_on_room_id"
   end
 
   create_table "hardware", force: :cascade do |t|
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 11) do
     t.decimal "cost", precision: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
-    t.bigint "location_id"
+    t.bigint "room_id"
     t.bigint "assigned_to_id"
     t.date "assigned_date"
     t.bigint "custodian_id"
@@ -99,18 +99,10 @@ ActiveRecord::Schema.define(version: 11) do
     t.datetime "updated_at", null: false
     t.index ["assigned_to_id"], name: "index_hardware_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_hardware_on_custodian_id"
-    t.index ["location_id"], name: "index_hardware_on_location_id"
     t.index ["manufacturer_id"], name: "index_hardware_on_manufacturer_id"
+    t.index ["room_id"], name: "index_hardware_on_room_id"
     t.index ["serial_num"], name: "index_hardware_on_serial_num", unique: true
     t.index ["tag_num"], name: "index_hardware_on_tag_num", unique: true
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.bigint "building_id", null: false
-    t.string "room", limit: 10
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["building_id"], name: "index_locations_on_building_id"
   end
 
   create_table "manufacturers", force: :cascade do |t|
@@ -120,6 +112,14 @@ ActiveRecord::Schema.define(version: 11) do
     t.index ["name"], name: "index_manufacturers_on_name", unique: true
   end
 
+  create_table "rooms", force: :cascade do |t|
+    t.bigint "building_id", null: false
+    t.string "name", limit: 25, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["building_id"], name: "index_rooms_on_building_id"
+  end
+
   create_table "software", force: :cascade do |t|
     t.string "name", limit: 75, null: false
     t.bigint "vendor_id", null: false
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 11) do
     t.integer "year", null: false
     t.bigint "assigned_to_id"
     t.date "assigned_date"
+    t.date "license_start_date", null: false
+    t.date "license_end_date", null: false
     t.bigint "hardware_id"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
@@ -148,12 +150,12 @@ ActiveRecord::Schema.define(version: 11) do
   add_foreign_key "accounts", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "custodians", "custodian_accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "custodians", "employees", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "employees", "locations", on_update: :cascade, on_delete: :restrict
+  add_foreign_key "employees", "rooms", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "custodians", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "hardware", "locations", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "manufacturers", on_update: :cascade, on_delete: :restrict
-  add_foreign_key "locations", "buildings", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "hardware", "rooms", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "rooms", "buildings", on_update: :cascade, on_delete: :cascade
   add_foreign_key "software", "custodians", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "hardware", on_update: :cascade, on_delete: :nullify

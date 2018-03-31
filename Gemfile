@@ -12,10 +12,11 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
-gem 'bcrypt', '~> 3.1.11', platforms: :ruby # Use ActiveModel has_secure_password
+gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'bcrypt'
 gem 'jquery-rails'
 gem 'devise'
 gem 'activeadmin'
+gem 'activeadmin_addons'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

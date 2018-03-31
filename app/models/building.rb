@@ -1,6 +1,5 @@
 class Building < ApplicationRecord
-  has_many :locations
-  has_many :rooms, through: :locations
+  has_many :rooms
 
-  accepts_nested_attributes_for :locations
+  accepts_nested_attributes_for :rooms
 end

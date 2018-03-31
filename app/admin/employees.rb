@@ -1,6 +1,6 @@
 ActiveAdmin.register Employee do
-  permit_params :first_name, :middle_initial, :last_name, :job_title, :email, :phone, :location_id,
-                locations_attributes: [:id, :room, :_destroy],
+  permit_params :first_name, :middle_initial, :last_name, :job_title, :email, :phone, :room_id,
+                rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
                 account_attributes: [:id, :account_type_id, :password, :password_confirmation, :_destroy],
                 account_types_attributes: [:id, :name, :_destroy]
@@ -9,7 +9,7 @@ ActiveAdmin.register Employee do
 
   controller do
     def scoped_collection
-      end_of_association_chain.includes(location: :building, account: :account_type)
+      end_of_association_chain.includes(room: :building, account: :account_type)
     end
   end
 
@@ -20,10 +20,10 @@ ActiveAdmin.register Employee do
     column :email
     column :phone
     column 'Building', sortable: 'buildings.name' do |employee|
-      employee.location.building.name
+      employee.room.building.name
     end
-    column 'Room', sortable: 'locations.room' do |employee|
-      employee.location.room
+    column 'Room', sortable: 'rooms.name' do |employee|
+      employee.room.name
     end
     actions
   end
@@ -32,12 +32,12 @@ ActiveAdmin.register Employee do
   filter :last_name_cont, label: 'Last name'
   filter :email_cont, label: 'Email'
   filter :phone_cont, label: 'Phone'
-  filter :location_room_cont, as: :string, label: 'Room'
-  filter :location_building_name_cont, as: :string, label: 'Building'
+  filter :room_name_cont, as: :string, label: 'Room'
+  filter :room_building_name_cont, as: :string, label: 'Building'
   filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: ''
 
   form do |f|
-    f.inputs 'Employee' do
+    f.inputs do
       f.input :first_name, required: true
       f.input :middle_initial
       f.input :last_name, required: true
@@ -48,7 +48,7 @@ ActiveAdmin.register Employee do
         f.input :email, input_html: { disabled: true, readonly: true }
       end
       f.input :phone, required: true
-      f.input :location_id, label: 'Location', as: :select, collection: Location.all.map{|u| ["#{u.building.name}.#{u.room}", u.id]}, required: true
+      f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
       f.fields_for :account, Account.new do |a|
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
@@ -64,10 +64,10 @@ ActiveAdmin.register Employee do
       row :email
       row :phone
       row 'Building' do
-        e.location.building.name
+        e.room.building.name
       end
       row 'Room' do
-        e.location.room
+        e.room.name
       end
       row 'Account type' do
         e.account.account_type.name

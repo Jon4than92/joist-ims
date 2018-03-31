@@ -56,7 +56,7 @@ class VendorsController < ApplicationController
   def destroy
     @vendor.destroy
     respond_to do |format|
-      format.html { redirect_to vendors_url, notice: 'Vendor was successfully destroyed.' }
+      format.html { redirect_to vendors_url, notice: 'Vendor was successfully deleted.' }
       format.json { head :no_content }
     end
   end

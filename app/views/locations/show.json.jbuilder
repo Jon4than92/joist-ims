@@ -1,1 +1,1 @@
-json.partial! "locations/location", location: @location
+json.partial! "rooms/room", room: @room

@@ -7,6 +7,8 @@ class CreateSoftware < ActiveRecord::Migration[5.1]
       t.integer :year, null: false
       t.references :assigned_to, references: :employee
       t.date :assigned_date
+      t.date :license_start_date, null: false
+      t.date :license_end_date, null: false
       t.references :hardware, foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }
 

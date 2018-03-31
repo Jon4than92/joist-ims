@@ -56,7 +56,7 @@ class CustodiansController < ApplicationController
   def destroy
     @custodian.destroy
     respond_to do |format|
-      format.html { redirect_to custodians_url, notice: 'Custodian was successfully destroyed.' }
+      format.html { redirect_to custodians_url, notice: 'Custodian was successfully deleted.' }
       format.json { head :no_content }
     end
   end

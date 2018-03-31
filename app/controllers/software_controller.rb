@@ -56,7 +56,7 @@ class SoftwareController < ApplicationController
   def destroy
     @software.destroy
     respond_to do |format|
-      format.html { redirect_to software_index_url, notice: 'Software was successfully destroyed.' }
+      format.html { redirect_to software_index_url, notice: 'Software was successfully deleted.' }
       format.json { head :no_content }
     end
   end
