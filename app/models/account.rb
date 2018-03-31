@@ -9,5 +9,7 @@ class Account < ApplicationRecord
 
   before_validation do
     self.email = self.employee.email
+    self.password = 'password'
+    self.password_confirmation = 'password'
   end
 end

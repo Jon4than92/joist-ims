@@ -15,3 +15,35 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+abbr[title] {
+  color: #f00;
+  text-decoration: none;
+}
+
+select {
+  border: 1px solid #c9d0d6;
+  border-radius: 3px;
+  font-size: 0.95em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  outline: none;
+  padding: 8px 10px 7px !important;
+}
+
+#sidebar fieldset.choices {
+  border: 1px solid #c9d0d6;
+  height: 20px;
+  margin-top: 20px;
+  border-radius: 3px;
+  width: 100%;
+
+  legend {
+    display: none;
+  }
+
+  input[type="checkbox"] {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

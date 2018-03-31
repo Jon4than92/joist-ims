@@ -24,9 +24,9 @@ Employee.create([
 ])
 
 AccountType.create!([
-    { name: 'management' },
-    { name: 'custodian' },
-    { name: 'standard' }
+    { name: 'Management' },
+    { name: 'Custodian' },
+    { name: 'Standard' }
 ])
 
 Account.create!([
