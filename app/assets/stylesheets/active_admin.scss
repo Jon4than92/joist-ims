@@ -1,3 +1,4 @@
+//= require activeadmin_addons/all
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -16,18 +17,18 @@
 //
 //   .status_tag { background: #6090DB; }
 
+body.logged_out .flash {
+  text-shadow: none;
+  color: #f00;
+}
+
 abbr[title] {
   color: #f00;
   text-decoration: none;
 }
 
-select {
-  border: 1px solid #c9d0d6;
-  border-radius: 3px;
-  font-size: 0.95em;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  outline: none;
-  padding: 8px 10px 7px !important;
+.field_with_errors select {
+  border: 1px solid #932419
 }
 
 #sidebar fieldset.choices {
@@ -36,6 +37,7 @@ select {
   margin-top: 20px;
   border-radius: 3px;
   width: 100%;
+  line-height: 14px;
 
   legend {
     display: none;
@@ -46,4 +48,14 @@ select {
     margin-left: 10px;
     margin-right: 10px;
   }
+}
+
+body.edit .boolean label {
+  border: 1px solid #c9d0d6;
+  height: 28px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 7px;
+  margin-left: 20%;
+  line-height: 14px;
 }

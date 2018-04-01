@@ -2,7 +2,7 @@ class CreateSoftware < ActiveRecord::Migration[5.1]
   def change
     create_table :software do |t|
       t.string :name, limit: 75, null: false
-      t.references :vendor, foreign_key: true, null: false
+      t.references :vendor, foreign_key: { on_update: :cascade, on_delete: :restrict }, null: false
       t.string :version, limit: 50, null: false
       t.integer :year, null: false
       t.references :assigned_to, references: :employee

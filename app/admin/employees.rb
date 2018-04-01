@@ -1,5 +1,5 @@
 ActiveAdmin.register Employee do
-  permit_params :first_name, :middle_initial, :last_name, :job_title, :email, :phone, :room_id,
+  permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active,
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
                 account_attributes: [:id, :account_type_id, :password, :password_confirmation, :_destroy],
@@ -48,9 +48,23 @@ ActiveAdmin.register Employee do
         f.input :email, input_html: { disabled: true, readonly: true }
       end
       f.input :phone, required: true
-      f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
-      f.fields_for :account, Account.new do |a|
-        a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
+      f.input :room_id, required: true, as: :nested_select,
+                        level_1: {
+                          attribute: :building_id,
+                          collection: Building.all
+                        },
+                        level_2: {
+                          attribute: :room_id,
+                          collection: Room.all
+                        }
+      if f.object.new_record?
+        f.fields_for :account, Account.new do |a|
+          a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
+        end
+      else
+        f.fields_for :account do |a|
+          a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
+        end
       end
       f.input :active, required: true if !f.object.new_record?
     end

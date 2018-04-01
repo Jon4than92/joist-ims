@@ -7,9 +7,15 @@ class Account < ApplicationRecord
   belongs_to :employee
   belongs_to :account_type
 
+  validates :employee_id, :presence => true
+  validates :account_type_id, :presence => true
+  validates :email, :presence => true
+
   before_validation do
-    self.email = self.employee.email
-    self.password = 'password'
-    self.password_confirmation = 'password'
+    if self.new_record?
+      self.email = self.employee.email
+      self.password = 'password'
+      self.password_confirmation = 'password'
+    end
   end
 end
