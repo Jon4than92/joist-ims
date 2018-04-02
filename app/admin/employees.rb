@@ -9,7 +9,7 @@ ActiveAdmin.register Employee do
 
   controller do
     def scoped_collection
-      end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
+      end_of_association_chain.includes(custodians: :custodian_account, rooms: :building, account: :account_type)
     end
   end
 
