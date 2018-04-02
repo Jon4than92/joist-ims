@@ -18,4 +18,10 @@ class Account < ApplicationRecord
       self.password_confirmation = 'password'
     end
   end
+
+  before_save do
+    #if self.account_type_id == 1
+    #  Custodian.create!(employee_id: self.employee_id, custodian_account_id: 1)
+    #end
+  end
 end

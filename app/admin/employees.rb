@@ -3,13 +3,13 @@ ActiveAdmin.register Employee do
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
                 account_attributes: [:id, :account_type_id, :password, :password_confirmation, :_destroy],
-                account_types_attributes: [:id, :name, :_destroy]
+                custodians_attributes: [:id, :employee_id, :custodian_account_id, :_destroy]
 
   config.sort_order = 'id_desc'
 
   controller do
     def scoped_collection
-      end_of_association_chain.includes(room: :building, account: :account_type)
+      end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
     end
   end
 
@@ -43,11 +43,13 @@ ActiveAdmin.register Employee do
       f.input :last_name, required: true
       f.input :job_title, required: true
       if f.object.new_record?
-        f.input :email, required: true
+        f.input :email, required: true, placeholder: 'me@example.com'
       else
         f.input :email, input_html: { disabled: true, readonly: true }
       end
-      f.input :phone, required: true
+      f.input :phone, required: true, placeholder: '123-456-7890'
+      f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
+=begin
       f.input :room_id, required: true, as: :nested_select,
                         level_1: {
                           attribute: :building_id,
@@ -57,6 +59,7 @@ ActiveAdmin.register Employee do
                           attribute: :room_id,
                           collection: Room.all
                         }
+=end
       if f.object.new_record?
         f.fields_for :account, Account.new do |a|
           a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
@@ -65,6 +68,9 @@ ActiveAdmin.register Employee do
         f.fields_for :account do |a|
           a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
         end
+      end
+      f.fields_for :custodians do |ca|
+        ca.input :custodian_account_id, label: 'Custodian account', as: :select, collection: CustodianAccount.all.map{|u| [u.name, u.id]}
       end
       f.input :active, required: true if !f.object.new_record?
     end
@@ -85,6 +91,9 @@ ActiveAdmin.register Employee do
       end
       row 'Account type' do
         e.account.account_type.name
+      end
+      if e.account.account_type.name == 'Custodian'
+        row :custodian_accounts
       end
       row :active
     end

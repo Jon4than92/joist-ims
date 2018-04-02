@@ -21,5 +21,10 @@ module JoistIms
         ENV[key.to_s] = value
       end if File.exists?(env_file)
     end
+
+    config.assets.js_compressor  = :uglify
+    config.assets.css_compressor = :scss
+
+    config.public_file_server.enabled
   end
 end

@@ -25,6 +25,7 @@ class EmployeesController < ApplicationController
   # POST /employees.json
   def create
     @employee = Employee.new(employee_params)
+    params[:employee].except(:building_id)
 
     respond_to do |format|
       if @employee.save
@@ -69,6 +70,6 @@ class EmployeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employee_params
-      params.fetch(:employee, {})
+      params.require(:employee).permit(:first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active)
     end
 end

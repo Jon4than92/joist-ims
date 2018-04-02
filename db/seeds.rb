@@ -39,6 +39,16 @@ AccountType.create!([
     { name: 'Standard' }
 ])
 
+CustodianAccount.create!([
+    { name: 'CB1' },
+    { name: 'CD2' },
+    { name: 'CA39P' },
+    { name: 'IX1' },
+    { name: 'CO5' },
+    { name: 'CO56' },
+    { name: 'CA71' }
+])
+
 Account.create!([
     { employee_id: 1, account_type_id: 3, email: 'john.c.doe@example.com', :password => 'password', :password_confirmation => 'password' },
     { employee_id: 2, account_type_id: 2, email: 'steve.e.smith@example.com', :password => 'password', :password_confirmation => 'password' },
