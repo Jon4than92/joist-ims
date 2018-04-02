@@ -159,5 +159,5 @@ ActiveRecord::Schema.define(version: 11) do
   add_foreign_key "software", "custodians", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "hardware", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "software", "vendors"
+  add_foreign_key "software", "vendors", on_update: :cascade, on_delete: :restrict
 end

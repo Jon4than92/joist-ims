@@ -24,7 +24,8 @@ class HardwareController < ApplicationController
   # POST /hardware
   # POST /hardware.json
   def create
-    @hardware = Hardware.new(hardware_params)
+    @hardware = Hardware.new(permitted_params[:hardware])
+    params[:hardware]
 
     respond_to do |format|
       if @hardware.save
