@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 11) do
 
   create_table "employees", force: :cascade do |t|
     t.string "first_name", limit: 25, null: false
-    t.string "middle_initial", limit: 1, null: false
+    t.string "middle_initial", limit: 1
     t.string "last_name", limit: 25, null: false
     t.string "job_title", limit: 50, null: false
     t.bigint "room_id", null: false

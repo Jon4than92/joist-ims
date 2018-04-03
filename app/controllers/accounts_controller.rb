@@ -26,6 +26,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
 
+
     respond_to do |format|
       if @account.save
         format.html { redirect_to @account, notice: 'Account was successfully created.' }
@@ -69,6 +70,6 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.fetch(:account, {})
+      params.require(:account).permit(:employee_id, :account_type_id, :email, :password, :password_confirmation)
     end
 end

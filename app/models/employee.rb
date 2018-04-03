@@ -1,6 +1,6 @@
 class Employee < ApplicationRecord
   belongs_to :room
-  has_one :account
+  has_one :account, inverse_of: :employee
   has_many :custodians, inverse_of: :employee
   has_many :custodian_accounts, through: :custodians
   has_many :hardware
@@ -9,7 +9,6 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :room
   accepts_nested_attributes_for :account
   accepts_nested_attributes_for :custodians, allow_destroy: true
-  accepts_nested_attributes_for :custodian_accounts
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true

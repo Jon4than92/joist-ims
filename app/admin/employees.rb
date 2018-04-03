@@ -2,14 +2,15 @@ ActiveAdmin.register Employee do
   permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active,
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
-                account_attributes: [:id, :account_type_id, :password, :password_confirmation, :_destroy],
+                account_attributes: [:id, :employee_id, :account_type_id, :email, :password, :password_confirmation, :_destroy],
+                account_types_attributes: [:id, :name, :_destroy],
                 custodians_attributes: [:id, :employee_id, :custodian_account_id, :_destroy]
 
   config.sort_order = 'id_desc'
 
   controller do
     def scoped_collection
-      end_of_association_chain.includes(custodians: :custodian_account, rooms: :building, account: :account_type)
+      end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
     end
   end
 
@@ -60,20 +61,17 @@ ActiveAdmin.register Employee do
                           collection: Room.all
                         }
 =end
-      if f.object.new_record?
-        f.fields_for :account, Account.new do |a|
-          a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
-        end
-      else
-        f.fields_for :account do |a|
-          a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
-        end
+      f.fields_for :account, Account.new do |a|
+        a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
-      f.fields_for :custodians do |ca|
+
+      # NEED TO MAKE THIS CREATE MULTIPLE CUSTODIANS FOR ONE EMPLOYEE
+      f.has_many :custodians, allow_destroy: true, new_record: true do |ca|
         ca.input :custodian_account_id, label: 'Custodian account', as: :select, collection: CustodianAccount.all.map{|u| [u.name, u.id]}
       end
       f.input :active, required: true if !f.object.new_record?
     end
+    f.semantic_errors *f.object.errors.keys
     f.actions
   end
 

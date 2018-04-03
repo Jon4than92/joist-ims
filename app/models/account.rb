@@ -4,12 +4,10 @@ class Account < ApplicationRecord
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :employee
+  belongs_to :employee, inverse_of: :account
   belongs_to :account_type
 
-  validates :employee_id, :presence => true
-  validates :account_type_id, :presence => true
-  validates :email, :presence => true
+  accepts_nested_attributes_for :account_type
 
   before_validation do
     if self.new_record?
