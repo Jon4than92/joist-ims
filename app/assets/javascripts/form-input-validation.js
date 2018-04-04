@@ -20,10 +20,18 @@ $(function() {
 
     // show custodian account field if account type "custodian" selected
     $('#employee_account_attributes_account_type_id').change(function() {
-        if ($(this).val().toString() === '2') {
-            $('#employee_custodians_attributes_0_custodian_account_id_input').css('display', 'block');
+        if ($(this).val() === '2') {
+            $('#employee_custodian_account_ids_input').css('display', 'block');
         } else {
-            $('#employee_custodians_attributes_0_custodian_account_id_input').css('display', 'none');
+            $('#employee_custodian_account_ids_input').css('display', 'none');
         }
     });
+
+    if ($('#employee_account_attributes_account_type_id').val() === '') {
+        $('#employee_custodian_account_ids_input').css('display', 'none');
+    }
+
+    if ($('#employee_account_attributes_account_type_id').val() === '2') {
+        $('#employee_custodian_account_ids_input').css('display', 'block');
+    }
 });

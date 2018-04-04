@@ -1,5 +1,5 @@
 ActiveAdmin.register Employee do
-  permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active,
+  permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active, custodian_account_ids: [],
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
                 account_attributes: [:id, :employee_id, :account_type_id, :email, :password, :password_confirmation, :_destroy],
@@ -38,6 +38,7 @@ ActiveAdmin.register Employee do
   filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: ''
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :first_name, required: true
       f.input :middle_initial
@@ -61,17 +62,12 @@ ActiveAdmin.register Employee do
                           collection: Room.all
                         }
 =end
-      f.fields_for :account, Account.new do |a|
+      f.fields_for :account, f.object.account || f.object.build_account do |a|
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
-
-      # NEED TO MAKE THIS CREATE MULTIPLE CUSTODIANS FOR ONE EMPLOYEE
-      f.has_many :custodians, allow_destroy: true, new_record: true do |ca|
-        ca.input :custodian_account_id, label: 'Custodian account', as: :select, collection: CustodianAccount.all.map{|u| [u.name, u.id]}
-      end
+      f.input :custodian_account_ids, label: 'Custodian accounts', as: :select, multiple: true, collection: CustodianAccount.all.map{|u| [u.name, u.id]}
       f.input :active, required: true if !f.object.new_record?
     end
-    f.semantic_errors *f.object.errors.keys
     f.actions
   end
 
