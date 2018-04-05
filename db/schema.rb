@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 11) do
 
   create_table "employees", force: :cascade do |t|
     t.string "first_name", limit: 25, null: false
-    t.string "middle_initial", limit: 1, null: false
+    t.string "middle_initial", limit: 1
     t.string "last_name", limit: 25, null: false
     t.string "job_title", limit: 50, null: false
     t.bigint "room_id", null: false
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "model_num", limit: 50, null: false
     t.integer "tag_num", null: false
     t.string "serial_num", limit: 50, null: false
-    t.decimal "cost", precision: 2, null: false
+    t.decimal "cost", precision: 10, scale: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
-    t.bigint "room_id"
+    t.bigint "room_id", null: false
     t.bigint "assigned_to_id"
     t.date "assigned_date"
     t.bigint "custodian_id"
@@ -133,7 +133,6 @@ ActiveRecord::Schema.define(version: 11) do
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "active", default: true, null: false
     t.index ["assigned_to_id"], name: "index_software_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_software_on_custodian_id"
     t.index ["hardware_id"], name: "index_software_on_hardware_id"

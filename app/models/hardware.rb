@@ -17,8 +17,8 @@ class Hardware < ApplicationRecord
   before_save :assigned_to_date_validation
 
   before_validation do
-    if self.year > Date.today().year
-      self.errors.add(:year, 'cannot be greater than ' + Date.today().year)
+    if self.year > Date.today.year
+      self.errors.add(:year, 'cannot be greater than ' + Date.today.year)
     elsif self.year < 1900
       self.errors.add(:year, 'cannot be less than 1900')
     end

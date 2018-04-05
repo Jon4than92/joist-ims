@@ -62,9 +62,9 @@ ActiveAdmin.register Hardware do
       f.input :condition, required: true
       f.input :notes, input_html: { rows: 8 }
       f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
-      f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}
-      f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today() }
-      f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
+      f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}, required: false
+      f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today }, required: false
+      f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}, required: false
     end
     f.actions
   end
