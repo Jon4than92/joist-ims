@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(version: 11) do
     t.string "model_num", limit: 50, null: false
     t.integer "tag_num", null: false
     t.string "serial_num", limit: 50, null: false
-    t.decimal "cost", precision: 2, null: false
+    t.decimal "cost", precision: 10, scale: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
-    t.bigint "room_id"
+    t.bigint "room_id", null: false
     t.bigint "assigned_to_id"
     t.date "assigned_date"
     t.bigint "custodian_id"

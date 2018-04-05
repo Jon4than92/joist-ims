@@ -7,11 +7,10 @@ class CreateHardware < ActiveRecord::Migration[5.1]
       t.string :model_num, limit: 50, null: false
       t.integer :tag_num, null: false
       t.string :serial_num, limit: 50, null: false
-      t.numeric :cost, precision: 2, null: false
+      t.decimal :cost, precision: 10, scale: 2, null: false
       t.string :condition, limit: 25, null: false
-      t.date :service_date
       t.text :notes
-      t.references :room, foreign_key: { on_update: :cascade, on_delete: :nullify }
+      t.references :room, foreign_key: { on_update: :cascade, on_delete: :nullify }, null: false
       t.references :assigned_to, references: :employee
       t.date :assigned_date
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }

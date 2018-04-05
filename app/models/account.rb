@@ -9,6 +9,8 @@ class Account < ApplicationRecord
 
   accepts_nested_attributes_for :account_type
 
+  validates :account_type_id, presence: true
+
   before_validation do
     if self.new_record?
       self.email = self.employee.email
