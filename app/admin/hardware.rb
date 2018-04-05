@@ -19,7 +19,9 @@ ActiveAdmin.register Hardware do
     column :model_num
     column :tag_num
     column :serial_num
-    column :cost
+    column 'Cost' do |hardware|
+      number_to_currency(hardware.cost, unit: '$')
+    end
     column 'Building', sortable: 'buildings.name' do |hardware|
       hardware.room.building.name
     end
@@ -30,6 +32,22 @@ ActiveAdmin.register Hardware do
   end
 
   filter :name_cont, label: 'Name'
+  filter :manufacturer_name_cont, label: 'Manufacturer'
+  filter :year, label: 'Year manufactured', as: :numeric_range_filter
+  filter :model_num_cont, label: 'Model number'
+  filter :tag_num_cont, label: 'Tag number'
+  filter :serial_num_cont, label: 'Serial number'
+  filter :cost, as: :numeric_range_filter
+  filter :condition_cont, label: 'Condition'
+  filter :notes_cont, label: 'Notes'
+  filter :room_name_cont, label: 'Room'
+  filter :room_building_name_cont, label: 'Building'
+  #filter :employee_first_name_cont, label: 'Assigned to (first name)'
+  #filter :employee_last_name_cont, label: 'Assigned to (last name)'
+  filter :assigned_date, as: :date_range
+  #filter :custodian_employee_first_name_cont, label: 'Custodian (first name)'
+  #filter :custodian_employee_last_name_cont, label: 'Custodian (last name)'
+  #filter :custodian_custodian_account_name_cont, label: 'Custodian account'
 
   form do |f|
     f.semantic_errors *f.object.errors.keys

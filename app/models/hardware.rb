@@ -14,6 +14,7 @@ class Hardware < ApplicationRecord
   validates :cost, presence: true
   validates :condition, presence: true
   validates :room_id, presence: true
+  before_save :assigned_to_date_validation
 
   before_validation do
     if self.year > Date.today().year
@@ -22,4 +23,14 @@ class Hardware < ApplicationRecord
       self.errors.add(:year, 'cannot be less than 1900')
     end
   end
+
+
+  private
+  def assigned_to_date_validation
+    if :assigned_to.blank?
+      errors.add(:assigned_to, "Must be assigned to an employee!")
+    end
+  end
+
+
 end

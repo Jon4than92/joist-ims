@@ -34,7 +34,7 @@ ActiveAdmin.register Software do
     column :license_start_date
 
     column 'Expiration Date' do |software|
-      software.license_end_date
+      status_tag software.set_expiration_status
     end
 
 #    column('License Status') { |license| status_tag (license.is_done ? "RENEWAL REQUIRED" : "EXPIRING SOON"), (license.is_done ? :ok : :error) }
