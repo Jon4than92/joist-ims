@@ -1,6 +1,5 @@
 ActiveAdmin.register Hardware do
   permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :assigned_to_id, :assigned_date, :custodian_id
-
   config.sort_order = 'id_desc'
 
   controller do
@@ -11,9 +10,11 @@ ActiveAdmin.register Hardware do
 
   index do
     selectable_column
-    column :name
+    column :name do |hardware|
+      link_to hardware.name, admin_hardware_path(hardware)
+    end
     column 'Manufacturer', sortable: 'manufacturers.name' do |hardware|
-      hardware.manufacturer.name
+      link_to hardware.manufacturer.name, admin_manufacturer_path(hardware.manufacturer)
     end
     column :model_num
     column :tag_num
@@ -49,4 +50,5 @@ ActiveAdmin.register Hardware do
     end
     f.actions
   end
+
 end

@@ -24,7 +24,7 @@ class SoftwareController < ApplicationController
   # POST /software
   # POST /software.json
   def create
-    @software = Software.new(software_params)
+    @software = Software.new(permitted_params[:software])
 
     respond_to do |format|
       if @software.save
