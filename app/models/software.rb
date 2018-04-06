@@ -12,18 +12,22 @@ class Software < ApplicationRecord
   validates :license_start_date, :license_end_date, presence: true
   before_save :license_date_valid
   before_save :set_expiration_status
+  before_save :status_tag_for_license
 #  validates :status_tag, presence: true
 #  validates :set_expiration_status, presence: true
+  validates :set_expiration_status, :inclusion => { :in => ['Renew Now', 'Expiring Soon', 'License Valid'] }
 
-  def set_expiration_status
-    if (license_end_date >= Date.today + 1.month)
-      status_tag = 'Renew Now!'
+
+  def set_expiration_status()
+    if (license_end_date <= Date.today + 1.month)
+      status_tag = 'Renewal Urgent'
     elsif (license_end_date < Date.today() + 1.month && license_end_date >= Date.today() + 3.months)
       status_tag = 'Expiring Soon'
-    else (license_end_date < Date.today() + 3.months)
+    else (license_end_date > Date.today() + 3.months)
       status_tag = 'License Valid'
     end
   end
+
 
   private
     def license_date_valid
@@ -34,19 +38,20 @@ class Software < ApplicationRecord
         end
     end
 
-#  def status_tag_for_license(software)
-#    printonrails_status_tag software_license_end_date(software), color_for_weight(software.license_end_date)
-#  end
+  def status_tag_for_license(software)
+    printonrails_status_tag software_set_expiration_status(software), color_for_weight(software.set_expiration_status)
+  end
 
-#  def color_for_weight(weight)
-#    case weight
-#     when :license_end_date <= 1.month.from_now
-#        :red
-#      when :license_end_date <= Date.today() && :license_end_date > 3.months.from_now
-#        :yellow
-#     when :license_end_date >= Date.today() + 3.months.from_now
-#        :green
-#    end
-#  end
+  def color_for_weight(weight)
+    case weight
+      when 'Renew Now'
+        :red
+      when 'Expiring Soon'
+        :yellow
+      when 'License Valid'
+        :green
+    end
+  end
+
 
 end

@@ -32,8 +32,9 @@ ActiveAdmin.register Software do
 #    column :assigned_date
 
     column :license_start_date
+    column :license_end_date
 
-    column 'Expiration Date' do |software|
+    column 'License Status' do |software|
       status_tag software.set_expiration_status
     end
 

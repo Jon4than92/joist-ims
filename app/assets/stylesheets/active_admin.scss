@@ -59,3 +59,9 @@ body.edit .boolean label {
   margin-left: 20%;
   line-height: 14px;
 }
+
+body.active_admin {
+  .status_tag.license_valid { background: #008000; }
+  .status_tag.renewal_urgent { background: #FF0000; }
+  .status_tag.expiring_soon { background: #FFFF00; }
+}

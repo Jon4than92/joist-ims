@@ -27,7 +27,7 @@ class Hardware < ApplicationRecord
 
   private
   def assigned_to_date_validation
-    if :assigned_to.blank?
+    if :assigned_to.blank? && :assigned_to_id.blank? == false
       errors.add(:assigned_to, "Must be assigned to an employee!")
     end
   end
