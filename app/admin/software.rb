@@ -50,8 +50,7 @@ ActiveAdmin.register Software do
   end
 
   filter :name_cont, label: 'Name'
-  filter :license_start_date, label: 'License Start Date'
-  filter :license_end_date, label: 'License End Date'
+  filter :license_start_date_and_license_end_date, label: 'License Date Range', as: :date_range # filters date range
   filter :active, as: :check_boxes, collection: [['Show Expired Licenses?', false]], label: ''
 
   form do |f|
