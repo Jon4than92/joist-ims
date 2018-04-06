@@ -12,10 +12,10 @@ class Software < ApplicationRecord
   validates :license_start_date, :license_end_date, presence: true
   before_save :license_date_valid
   before_save :set_expiration_status
-  before_save :status_tag_for_license
+ # before_save :status_tag_for_license
 #  validates :status_tag, presence: true
 #  validates :set_expiration_status, presence: true
-  validates :set_expiration_status, :inclusion => { :in => ['Renew Now', 'Expiring Soon', 'License Valid'] }
+#  validates :set_expiration_status, :inclusion => { :in => ['Renew Now', 'Expiring Soon', 'License Valid'] }
 
 
   def set_expiration_status()
@@ -38,20 +38,23 @@ class Software < ApplicationRecord
         end
     end
 
-  def status_tag_for_license(software)
-    printonrails_status_tag software_set_expiration_status(software), color_for_weight(software.set_expiration_status)
-  end
 
-  def color_for_weight(weight)
-    case weight
-      when 'Renew Now'
-        :red
-      when 'Expiring Soon'
-        :yellow
-      when 'License Valid'
-        :green
-    end
-  end
+# BROKEN CASE SWITCH // GHETTO FIXED WITH CSS ON STATUS TAGS - SEE MODEL FOR STATUS_TAG FUNCTIONALITY
+#
+#  def status_tag_for_license(software)
+#    printonrails_status_tag software_set_expiration_status(software), color_for_weight(software.set_expiration_status)
+#  end
+
+#  def color_for_weight(weight)
+#    case weight
+#      when 'Renew Now'
+#        :red
+#      when 'Expiring Soon'
+#        :yellow
+#      when 'License Valid'
+#        :green
+#    end
+#  end
 
 
 end

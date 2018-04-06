@@ -1,7 +1,8 @@
 ActiveAdmin.register Software do
   permit_params :name, :vendor_id, :version, :year, :assigned_to_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
 
-  config.sort_order = 'license_end_date_asc',
+  config.sort_order = 'license_end_date_asc'
+  config.per_page = 30
 
 #  controller do
 #    scope :all, :default => true
@@ -17,6 +18,7 @@ ActiveAdmin.register Software do
 #  end
 
   index do
+    config.default_per_page = 1
     selectable_column
     column :name do |software|
       link_to software.name, admin_software_path(software)

@@ -158,6 +158,7 @@ ActiveAdmin.setup do |config|
   # == Setting a Favicon
   #
   # config.favicon = 'favicon.ico'
+  config.favicon = '/favicon.ico'
 
   # == Meta Tags
   #
@@ -230,8 +231,14 @@ ActiveAdmin.setup do |config|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
   #     end
   #   end
+#  config.namespace :admin do |admin|
+#    admin.build_menu :utility_navigation do |menu|
+#      menu.add id: 'current_user', label: -> { display_name current_active_admin_user }, url: -> { user_path(current_active_admin_user) }, if: :current_active_admin_user?
+#      admin.add_logout_button_to_menu menu
+#    end
+#  end
 
-  # == Download Links
+    # == Download Links
   #
   # You can disable download links on resource listing pages,
   # or customize the formats shown per namespace/globally
@@ -262,6 +269,8 @@ ActiveAdmin.setup do |config|
   # You can control the max per page count too.
   #
   # config.max_per_page = 10_000
+  config.default_per_page = 30
+  config.max_per_page = 50
 
   # == Filters
   #

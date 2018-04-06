@@ -3,7 +3,7 @@ ActiveAdmin.register Manufacturer do
   permit_params :name
 
   config.sort_order = 'id_desc'
-
+  config.per_page = 30
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

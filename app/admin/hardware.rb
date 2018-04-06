@@ -1,6 +1,7 @@
 ActiveAdmin.register Hardware do
   permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :assigned_to_id, :assigned_date, :custodian_id
   config.sort_order = 'id_desc'
+  config.per_page = 30
 
   controller do
     def scoped_collection

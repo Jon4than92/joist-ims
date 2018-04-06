@@ -1,4 +1,5 @@
 ActiveAdmin.register Employee do
+  config.per_page = 30
   permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active, custodian_account_ids: [],
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
@@ -45,11 +46,11 @@ ActiveAdmin.register Employee do
       f.input :last_name, required: true
       f.input :job_title, required: true
       if f.object.new_record?
-        f.input :email, required: true, placeholder: 'me@example.com'
+        f.input :email, required: true, placeholder: 'me@example.com', :as => :email
       else
         f.input :email, input_html: { disabled: true, readonly: true }
       end
-      f.input :phone, required: true, placeholder: '123-456-7890'
+      f.input :phone, required: true, placeholder: '123-456-7890', :as => :phone
       f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
 =begin
       f.input :room_id, required: true, as: :nested_select,
