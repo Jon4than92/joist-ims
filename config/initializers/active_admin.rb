@@ -235,6 +235,15 @@ ActiveAdmin.setup do |config|
     admin.build_menu do |menu|
       menu.add label: 'Lists', priority: 11
     end
+
+    admin.build_menu :utility_navigation do |menu|
+      menu.add :label  => proc { display_name current_active_admin_user.employee.full_name },
+               url:   -> { admin_employee_path(current_active_admin_user.employee_id) },
+               :id     => 'current_account',
+               :if     => proc{ current_active_admin_user? }
+      admin.add_logout_button_to_menu menu
+    end
+
   end
 
     # == Download Links

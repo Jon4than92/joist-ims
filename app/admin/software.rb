@@ -1,12 +1,13 @@
 ActiveAdmin.register Software do
   permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
 
-  config.sort_order = 'name_desc'
+  config.sort_order = 'license_end_date_asc'
   config.per_page = 30
 
   scope :all, :default => true
   scope :renewal_urgent do |software|
     software.where('license_end_date <= ?', Date.today + 1.month)
+
   end
   scope :expiring_soon do |software|
     software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)
@@ -35,9 +36,13 @@ ActiveAdmin.register Software do
     column 'License Status' do |software|
       status_tag software.set_expiration_status
     end
-#    column('License Status') { |license| status_tag (license.is_done ? "RENEWAL REQUIRED" : "EXPIRING SOON"), (license.is_done ? :ok : :error) }
+    if params[:scope] == 'renewal_urgent'
+      column 'Days Remaining' do |software|
+        "#{software.calc_time_remaining} Days"
+      end
+    end
     column 'Assigned Hardware', sortable: 'hardware.name' do |software|
-      software.hardware.name
+      link_to software.hardware.name, admin_hardware_path(software.hardware)
     end
 #    column :custodian_id - need assigned custodian + account here - JO
     actions

@@ -11,6 +11,7 @@ class Software < ApplicationRecord
   validates :license_start_date, presence: true
   validates :license_end_date, presence: true
 
+  after_initialize :calc_time_remaining
   before_validation :check_license_dates
   before_validation :set_assigned_date
   before_save :set_expiration_status
@@ -25,13 +26,16 @@ class Software < ApplicationRecord
       status_tag = 'Renewal Urgent'
     elsif (self.license_end_date > Date.today + 1.month && self.license_end_date < Date.today + 3.months)
       status_tag = 'Expiring Soon'
+   #   status_tag = 'Expiring in ' + "#{self.calc_time_remaining} days"
     else (self.license_end_date > Date.today + 3.months)
       status_tag = 'License Valid'
     end
   end
 
-    def time_remaining
-      time_remaining = self.license_end_date.to_date - Date.today()
+    def calc_time_remaining
+      end_date = self.license_end_date
+      date_now = Date.today()
+      time_remaining = (end_date - date_now).to_i
     end
 
   private
