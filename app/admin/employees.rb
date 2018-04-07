@@ -49,23 +49,19 @@ ActiveAdmin.register Employee do
       f.input :last_name, required: true
       f.input :job_title, required: true
       if f.object.new_record?
-        f.input :email, required: true, input_html: { placeholder: 'me@example.com' }
+        f.input :email, required: true, placeholder: 'me@example.com', :as => :email,  :hint => 'Required Entry Format: email@domain.com'
       else
         f.input :email, input_html: { disabled: true, readonly: true }
       end
-      f.input :phone, required: true, input_html: { placeholder: '123-456-7890' }
-      f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
-=begin
+      f.input :phone, placeholder: '123-456-7890', :as => :phone, :hint => 'Required Entry Format: ###-###-####'
+
+#      f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
+# old input for room_id. below nested select should reload on new query
+
       f.input :room_id, required: true, as: :nested_select,
-                        level_1: {
-                          attribute: :building_id,
-                          collection: Building.all
-                        },
-                        level_2: {
-                          attribute: :room_id,
-                          collection: Room.all
-                        }
-=end
+                        level_1: { attribute: :building_id, collection: Building.all },
+                        level_2: { attribute: :room_id, collection: Room.all }
+
       f.fields_for :account, f.object.account || f.object.build_account do |a|
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
@@ -80,7 +76,7 @@ ActiveAdmin.register Employee do
       row :full_name
       row :job_title
       row :email
-      row :phone
+      row :phone, :as => :phone
       row 'Building' do |employee|
         link_to employee.room.building.name, admin_building_path(employee.room.building)
       end

@@ -16,7 +16,7 @@ class Employee < ApplicationRecord
   validates :job_title, presence: true
   validates :room_id, presence: true
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'must follow the "example@email.com" format' }
-  validates :phone, presence: true, format: { with: /\A(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\z/i, message: 'must follow a standard US format'}
+  validates :phone, presence: true, format: { with: /\A^\d{3}-\d{3}-\d{4}$\z/i, message: 'Must be formatted as: ###-###-####' }
 
   def full_name
     first_name + ' ' + (middle_initial ? middle_initial + ' ' : '') + last_name

@@ -34,4 +34,13 @@ class Hardware < ApplicationRecord
         self.assigned_date = nil
       end
     end
+
+#  def last_updated_by_current_account() #
+#    if self.last_updated_by != current_account.id
+#      errors.add(:last_updated_by, 'Must be updated by current user')
+#    else
+#      self.last_updated_by == nil
+#    end
+#  end
+
 end

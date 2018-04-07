@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 11) do
+ActiveRecord::Schema.define(version: 20180407181107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 11) do
 
   create_table "employees", force: :cascade do |t|
     t.string "first_name", limit: 25, null: false
-    t.string "middle_initial", limit: 1
+    t.string "middle_initial", limit: 1, null: false
     t.string "last_name", limit: 25, null: false
     t.string "job_title", limit: 50, null: false
     t.bigint "room_id", null: false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 11) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "last_updated_by"
     t.index ["email"], name: "index_employees_on_email", unique: true
     t.index ["room_id"], name: "index_employees_on_room_id"
   end
@@ -86,19 +87,21 @@ ActiveRecord::Schema.define(version: 11) do
     t.bigint "manufacturer_id", null: false
     t.integer "year", null: false
     t.string "model_num", limit: 50, null: false
-    t.string "tag_num", limit: 50, null: false
+    t.integer "tag_num", null: false
     t.string "serial_num", limit: 50, null: false
-    t.decimal "cost", precision: 10, scale: 2, null: false
+    t.decimal "cost", precision: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
-    t.bigint "room_id", null: false
+    t.bigint "room_id"
     t.bigint "employee_id"
     t.date "assigned_date"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "last_updated_by"
     t.index ["custodian_id"], name: "index_hardware_on_custodian_id"
-    t.index ["employee_id"], name: "index_hardware_on_employee_id"
+    t.index ["employee_id"], name: "index_hardware_on_assigned_to_id"
+    t.index ["last_updated_by"], name: "index_hardware_on_last_updated_by"
     t.index ["manufacturer_id"], name: "index_hardware_on_manufacturer_id"
     t.index ["room_id"], name: "index_hardware_on_room_id"
     t.index ["serial_num"], name: "index_hardware_on_serial_num", unique: true
@@ -129,13 +132,13 @@ ActiveRecord::Schema.define(version: 11) do
     t.date "assigned_date"
     t.date "license_start_date", null: false
     t.date "license_end_date", null: false
-    t.boolean "active", default: true, null: false
     t.bigint "hardware_id"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true, null: false
     t.index ["custodian_id"], name: "index_software_on_custodian_id"
-    t.index ["employee_id"], name: "index_software_on_employee_id"
+    t.index ["employee_id"], name: "index_software_on_assigned_to_id"
     t.index ["hardware_id"], name: "index_software_on_hardware_id"
     t.index ["vendor_id"], name: "index_software_on_vendor_id"
   end
@@ -153,6 +156,7 @@ ActiveRecord::Schema.define(version: 11) do
   add_foreign_key "custodians", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "employees", "rooms", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "custodians", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "hardware", "employees", column: "last_updated_by", name: "hardware_employees_id_fk", on_update: :cascade, on_delete: :cascade
   add_foreign_key "hardware", "employees", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "manufacturers", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "rooms", on_update: :cascade, on_delete: :nullify

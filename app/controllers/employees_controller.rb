@@ -25,7 +25,7 @@ class EmployeesController < ApplicationController
   # POST /employees
   # POST /employees.json
   def create
-    @employee = Employee.new(employee_params)
+    @employee = Employee.new(permitted_params[:employee])
 
     respond_to do |format|
       if @employee.save

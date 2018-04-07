@@ -4,6 +4,17 @@ ActiveAdmin.register Software do
   config.sort_order = 'name_desc'
   config.per_page = 30
 
+  scope :all, :default => true
+  scope :renewal_urgent do |software|
+    software.where('license_end_date <= ?', Date.today + 1.month)
+  end
+  scope :expiring_soon do |software|
+    software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)
+  end
+  scope :license_valid do |software|
+    software.where('license_end_date > ?', Date.today + 3.months)
+  end
+
   index do
     config.default_per_page = 1
     selectable_column
@@ -43,7 +54,7 @@ ActiveAdmin.register Software do
       f.input :vendor_id, label: 'Vendor', as: :select, collection: Vendor.all.map{|u| [u.name, u.id]}, required: true
       f.input :version, required: true
       f.input :year, required: true
-      f.input :assigned_to_id, label: 'Assigned to Employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}
+      f.input :employee_id, label: 'Assigned to Employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}
       f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today() }, required: true
       f.input :license_start_date, as: :datepicker, datepicker_options: { min_date: 3.months.ago.to_date }, required: true
       f.input :license_end_date, as: :datepicker, datepicker_options: { min_date: :license_start_date.to_s }, required: true

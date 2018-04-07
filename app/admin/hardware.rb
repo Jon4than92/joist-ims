@@ -1,5 +1,5 @@
 ActiveAdmin.register Hardware do
-  permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :employee_id, :assigned_date, :custodian_id
+  permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :employee_id, :assigned_date, :custodian_id, :last_updated_by
 
   config.sort_order = 'id_desc'
   config.per_page = 30
@@ -67,6 +67,7 @@ ActiveAdmin.register Hardware do
       f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today }
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }
+      f.input :last_updated_by, :input_html => { :value => current_account.employee.id }
     end
     f.actions
   end
@@ -93,7 +94,7 @@ ActiveAdmin.register Hardware do
       end
 =begin
       row 'Assigned to employee' do |hardware|
-        link_to hardware.employee.first_name, admin_employee_path(hardware.employee)
+        link_to hardware.employee.full_name, admin_employee_path(hardware.employee)
       end
       row :assigned_date
       row 'Assigned to custodian' do |hardware|
@@ -106,6 +107,9 @@ ActiveAdmin.register Hardware do
     attributes_table :title => 'Metadata' do
       row :created_at
       row :updated_at
+      row 'Last Updated by', :last_updated_by_current_account do |hardware|
+        link_to hardware.employee.full_name, admin_employee_path(hardware.employee)
+      end
     end
   end
 
