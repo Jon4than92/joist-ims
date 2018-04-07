@@ -1,21 +1,8 @@
 ActiveAdmin.register Software do
-  permit_params :name, :vendor_id, :version, :year, :assigned_to_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
+  permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
 
-  config.sort_order = 'license_end_date_asc'
+  config.sort_order = 'name_desc'
   config.per_page = 30
-
-#  controller do
-#    scope :all, :default => true
-#    scope :expiring_soon do |software|
-#      software.where('due_date > ? and due_date < ?', Date.today, 1.month.from_now)
-#    end
-#    scope :late do |tasks|
-#      tasks.where('due_date < ?', Time.now)
-#    end
-#    scope :mine do |tasks|
-#      tasks.where(:admin_user_id => current_admin_user.id)
-#    end
-#  end
 
   index do
     config.default_per_page = 1
@@ -32,16 +19,12 @@ ActiveAdmin.register Software do
 #      link_to software.employees.first_name, admin_employees_path(software.employees)
 #    end
 #    column :assigned_date
-
     column :license_start_date
     column :license_end_date
-
     column 'License Status' do |software|
       status_tag software.set_expiration_status
     end
-
 #    column('License Status') { |license| status_tag (license.is_done ? "RENEWAL REQUIRED" : "EXPIRING SOON"), (license.is_done ? :ok : :error) }
-
     column 'Assigned Hardware', sortable: 'hardware.name' do |software|
       software.hardware.name
     end
@@ -50,8 +33,8 @@ ActiveAdmin.register Software do
   end
 
   filter :name_cont, label: 'Name'
-  filter :license_start_date_and_license_end_date, label: 'License Date Range', as: :date_range # filters date range
-  filter :active, as: :check_boxes, collection: [['Show Expired Licenses?', false]], label: ''
+  filter :license_start_date_and_license_end_date, label: 'License date range', as: :date_range
+  filter :active, as: :check_boxes, collection: [['Expired license', false]], label: ''
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
@@ -62,33 +45,12 @@ ActiveAdmin.register Software do
       f.input :year, required: true
       f.input :assigned_to_id, label: 'Assigned to Employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}
       f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today() }, required: true
-
-      f.input :license_start_date, as: :datepicker, datepicker_options: {
-          min_date: 3.months.ago.to_date,
-      }, required: true
-
-      f.input :license_end_date, as: :datepicker, datepicker_options: {
-          min_date: :license_start_date.to_s,
-      }, required: true
-      f.input :hardware_id, as: :select, collection: Hardware.all.map{|u| ["#{u.name}", u.id]}
+      f.input :license_start_date, as: :datepicker, datepicker_options: { min_date: 3.months.ago.to_date }, required: true
+      f.input :license_end_date, as: :datepicker, datepicker_options: { min_date: :license_start_date.to_s }, required: true
+      f.input :hardware_id, as: :select, collection: Hardware.all.map{|u| [u.name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :active, required: true if !f.object.new_record?
     end
     f.actions
   end
-
-
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
-
 end

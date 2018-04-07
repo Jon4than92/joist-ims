@@ -1,41 +1,49 @@
 class Software < ApplicationRecord
   belongs_to :vendor
   belongs_to :hardware
-  belongs_to :assigned_to, class_name: 'Employee'
+  belongs_to :employee
   belongs_to :custodian
 
   validates :name, presence: true
   validates :vendor_id, presence: true
   validates :version, presence: true
   validates :year, presence: true, format: { with: /\A\d{4}\z/, message: 'must contain only four digits' }
-  validates :hardware_id, presence: true
-  validates :license_start_date, :license_end_date, presence: true
-  before_save :license_date_valid
+  validates :license_start_date, presence: true
+  validates :license_end_date, presence: true
+
+  before_validation :check_license_dates
+  before_validation :set_assigned_date
   before_save :set_expiration_status
  # before_save :status_tag_for_license
 #  validates :status_tag, presence: true
 #  validates :set_expiration_status, presence: true
 #  validates :set_expiration_status, :inclusion => { :in => ['Renew Now', 'Expiring Soon', 'License Valid'] }
 
-
-  def set_expiration_status()
-    if (license_end_date <= Date.today + 1.month)
+  def set_expiration_status
+    if self.license_end_date <= Date.today + 1.month
       status_tag = 'Renewal Urgent'
-    elsif (license_end_date < Date.today() + 1.month && license_end_date >= Date.today() + 3.months)
+    elsif self.license_end_date < Date.today + 1.month and self.license_end_date >= Date.today + 3.months
       status_tag = 'Expiring Soon'
-    else (license_end_date > Date.today() + 3.months)
+    else self.license_end_date > Date.today + 3.months
       status_tag = 'License Valid'
     end
   end
 
-
   private
-    def license_date_valid
-      return if :license_start_date.blank? || :license_end_date.blank?
-
-        if (license_start_date > license_end_date)
-          errors.add(:license_end_date, "Must be after License Start Date")
+    def check_license_dates
+      if self.license_start_date.blank? and self.license_end_date.blank?
+        if self.license_end_date < self.license_start_date
+          errors.add(:license_end_date, 'must be after license start date')
         end
+      end
+    end
+
+    def set_assigned_date
+      if self.employee_id?
+        self.assigned_date = Date.today
+      else
+        self.assigned_date = nil
+      end
     end
 
 

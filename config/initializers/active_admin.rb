@@ -231,12 +231,11 @@ ActiveAdmin.setup do |config|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
   #     end
   #   end
-#  config.namespace :admin do |admin|
-#    admin.build_menu :utility_navigation do |menu|
-#      menu.add id: 'current_user', label: -> { display_name current_active_admin_user }, url: -> { user_path(current_active_admin_user) }, if: :current_active_admin_user?
-#      admin.add_logout_button_to_menu menu
-#    end
-#  end
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'Lists', priority: 11
+    end
+  end
 
     # == Download Links
   #

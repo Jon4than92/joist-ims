@@ -3,7 +3,7 @@ class Employee < ApplicationRecord
   has_one :account, inverse_of: :employee
   has_many :custodians, inverse_of: :employee
   has_many :custodian_accounts, through: :custodians
-  has_many :hardware, foreign_key: :assigned_to_id
+  has_many :hardware
   has_many :software
 
   accepts_nested_attributes_for :room
@@ -20,13 +20,5 @@ class Employee < ApplicationRecord
 
   def full_name
     first_name + ' ' + (middle_initial ? middle_initial + ' ' : '') + last_name
-  end
-
-  def custodian_accounts
-    list = ''
-    self.custodians.each do |c|
-      list += (c.equal? self.custodians.last) ? c.custodian_account.name : c.custodian_account.name + ', '
-    end
-    list
   end
 end

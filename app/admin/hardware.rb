@@ -1,5 +1,6 @@
 ActiveAdmin.register Hardware do
-  permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :assigned_to_id, :assigned_date, :custodian_id
+  permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :employee_id, :assigned_date, :custodian_id
+
   config.sort_order = 'id_desc'
   config.per_page = 30
 
@@ -59,15 +60,53 @@ ActiveAdmin.register Hardware do
       f.input :model_num, required: true
       f.input :tag_num, required: true
       f.input :serial_num, required: true
-      f.input :cost, required: true
+      f.input :cost, label: 'Cost ($)', required: true
       f.input :condition, required: true
-      f.input :notes, input_html: { rows: 8 }
       f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
-      f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}, required: false
-      f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today }, required: false
-      f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}, required: false
+      f.input :employee_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
+      f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today }
+      f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
+      f.input :notes, input_html: { rows: 8 }
     end
     f.actions
+  end
+
+  show do
+    attributes_table :title => 'Hardware' do
+      row :name
+      row 'Manufacturer' do |hardware|
+        link_to hardware.manufacturer.name, admin_manufacturer_path(hardware.manufacturer)
+      end
+      row :year
+      row :model_num
+      row :tag_num
+      row :serial_num
+      row 'Cost ($)' do |hardware|
+        hardware.cost
+      end
+      row :condition
+      row 'Building' do |hardware|
+        link_to hardware.room.building.name, admin_building_path(hardware.room.building)
+      end
+      row 'Room' do |hardware|
+        link_to hardware.room.name, admin_room_path(hardware.room)
+      end
+=begin
+      row 'Assigned to employee' do |hardware|
+        link_to hardware.employee.first_name, admin_employee_path(hardware.employee)
+      end
+      row :assigned_date
+      row 'Assigned to custodian' do |hardware|
+        link_to hardware.custodian.employee.first_name, admin_custodian_path(hardware.custodian.employee)
+      end
+=end
+      row :notes
+    end
+
+    attributes_table :title => 'Metadata' do
+      row :created_at
+      row :updated_at
+    end
   end
 
 end

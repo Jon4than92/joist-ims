@@ -86,19 +86,19 @@ ActiveRecord::Schema.define(version: 11) do
     t.bigint "manufacturer_id", null: false
     t.integer "year", null: false
     t.string "model_num", limit: 50, null: false
-    t.integer "tag_num", null: false
+    t.string "tag_num", limit: 50, null: false
     t.string "serial_num", limit: 50, null: false
     t.decimal "cost", precision: 10, scale: 2, null: false
     t.string "condition", limit: 25, null: false
     t.text "notes"
     t.bigint "room_id", null: false
-    t.bigint "assigned_to_id"
+    t.bigint "employee_id"
     t.date "assigned_date"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assigned_to_id"], name: "index_hardware_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_hardware_on_custodian_id"
+    t.index ["employee_id"], name: "index_hardware_on_employee_id"
     t.index ["manufacturer_id"], name: "index_hardware_on_manufacturer_id"
     t.index ["room_id"], name: "index_hardware_on_room_id"
     t.index ["serial_num"], name: "index_hardware_on_serial_num", unique: true
@@ -125,16 +125,17 @@ ActiveRecord::Schema.define(version: 11) do
     t.bigint "vendor_id", null: false
     t.string "version", limit: 50, null: false
     t.integer "year", null: false
-    t.bigint "assigned_to_id"
+    t.bigint "employee_id"
     t.date "assigned_date"
     t.date "license_start_date", null: false
     t.date "license_end_date", null: false
+    t.boolean "active", default: true, null: false
     t.bigint "hardware_id"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assigned_to_id"], name: "index_software_on_assigned_to_id"
     t.index ["custodian_id"], name: "index_software_on_custodian_id"
+    t.index ["employee_id"], name: "index_software_on_employee_id"
     t.index ["hardware_id"], name: "index_software_on_hardware_id"
     t.index ["vendor_id"], name: "index_software_on_vendor_id"
   end
@@ -152,12 +153,12 @@ ActiveRecord::Schema.define(version: 11) do
   add_foreign_key "custodians", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "employees", "rooms", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "custodians", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "hardware", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "hardware", "employees", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "manufacturers", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "rooms", on_update: :cascade, on_delete: :nullify
   add_foreign_key "rooms", "buildings", on_update: :cascade, on_delete: :cascade
   add_foreign_key "software", "custodians", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "software", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "software", "employees", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "hardware", on_update: :cascade, on_delete: :nullify
   add_foreign_key "software", "vendors", on_update: :cascade, on_delete: :restrict
 end

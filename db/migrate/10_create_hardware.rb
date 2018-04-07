@@ -5,29 +5,20 @@ class CreateHardware < ActiveRecord::Migration[5.1]
       t.references :manufacturer, foreign_key: { on_update: :cascade, on_delete: :restrict }, null: false
       t.integer :year, null: false
       t.string :model_num, limit: 50, null: false
-      t.integer :tag_num, null: false
+      t.string :tag_num, limit: 50, null: false
       t.string :serial_num, limit: 50, null: false
       t.decimal :cost, precision: 10, scale: 2, null: false
       t.string :condition, limit: 25, null: false
       t.text :notes
       t.references :room, foreign_key: { on_update: :cascade, on_delete: :nullify }, null: false
-      t.references :assigned_to, references: :employee
+      t.references :employee, foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.date :assigned_date
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }
 
       t.timestamps
     end
 
-    add_foreign_key :hardware, :employees, column: :assigned_to_id, on_update: :cascade, on_delete: :nullify
     add_index :hardware, :tag_num, unique: true
     add_index :hardware, :serial_num, unique: true
-  end
-
-  def up
-    execute "ALTER TABLE hardware ADD CONSTRAINT hardware_year_limit CHECK (year <= date_part('year', CURRENT_DATE))"
-  end
-
-  def down
-    execute 'ALTER TABLE hardware DROP CONSTRAINT hardware_year_limit'
   end
 end

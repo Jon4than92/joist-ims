@@ -17,6 +17,16 @@
 //
 //   .status_tag { background: #6090DB; }
 
+#main_content table tbody a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #5796da;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 body.logged_out .flash {
   text-shadow: none;
   color: #f00;
@@ -60,8 +70,26 @@ body.edit .boolean label {
   line-height: 14px;
 }
 
-body.active_admin {
-  .status_tag.license_valid { background: #008000; }
-  .status_tag.renewal_urgent { background: #FF0000; }
-  .status_tag.expiring_soon { background: #FFFF00; }
+.status_tag:not(.yes):not(.no) {
+  background: transparent;
+  border-radius: 3px;
+
+  &.license_valid {
+    border: 1px solid #38bc33;
+    color: #38bc33;
+  }
+  &.renewal_urgent {
+    border: 1px solid #ff2825;
+    color: #ff2825;
+  }
+  &.expiring_soon {
+    border: 1px solid #fff93e;
+    color: #fff93e;
+  }
+}
+
+.header .tabs .current.has_nested ul {
+  li.current a {
+    background: #686f74 !important;
+  }
 }

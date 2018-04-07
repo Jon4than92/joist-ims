@@ -1,15 +1,37 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Manufacturer.create!([
+    { name: 'Dell' },
+    { name: 'Apple' },
+    { name: 'Hewlett-Packard' },
+    { name: 'ASUS' }
+])
+
+Vendor.create!([
+    { name: 'Google' },
+    { name: 'Microsoft' },
+    { name: 'Autodesk' },
+    { name: 'Adobe' }
+])
 
 Building.create!([
     { name: 'A23' },
     { name: 'B55' },
     { name: 'TDMA2' }
+])
+
+CustodianAccount.create!([
+    { name: 'CB1' },
+    { name: 'CD2' },
+    { name: 'CA39P' },
+    { name: 'IX1' },
+    { name: 'CO5' },
+    { name: 'CO56' },
+    { name: 'CA71' }
+])
+
+AccountType.create!([
+    { name: 'Management' },
+    { name: 'Custodian' },
+    { name: 'Standard' }
 ])
 
 Room.create!([
@@ -33,26 +55,10 @@ Employee.create!([
     { first_name: 'Bob', middle_initial: 'T', last_name: 'Douglas', job_title: 'Project Manager', room_id: 10, email: 'bob.t.douglas@example.com', phone: '281-333-3333', active: true }
 ])
 
-AccountType.create!([
-    { name: 'Management' },
-    { name: 'Custodian' },
-    { name: 'Standard' }
-])
-
 Account.create!([
     { employee_id: 1, account_type_id: 3, email: 'john.c.doe@example.com', :password => 'password', :password_confirmation => 'password' },
     { employee_id: 2, account_type_id: 2, email: 'steve.e.smith@example.com', :password => 'password', :password_confirmation => 'password' },
     { employee_id: 3, account_type_id: 1, email: 'bob.t.douglas@example.com', :password => 'password', :password_confirmation => 'password' }
-])
-
-CustodianAccount.create!([
-   { name: 'CB1' },
-   { name: 'CD2' },
-   { name: 'CA39P' },
-   { name: 'IX1' },
-   { name: 'CO5' },
-   { name: 'CO56' },
-   { name: 'CA71' }
 ])
 
 Custodian.create!([
@@ -61,16 +67,12 @@ Custodian.create!([
     { employee_id: 2, custodian_account_id: 6 }
 ])
 
-Manufacturer.create!([
-    { name: 'Dell' },
-    { name: 'Apple' },
-    { name: 'Hewlett-Packard' },
-    { name: 'ASUS' }
+Hardware.create!([
+    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, employee_id: 1, custodian_id: 2 },
+    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, employee_id: 3, custodian_id: 3 }
 ])
 
-Vendor.create!([
-    { name: 'Google' },
-    { name: 'Microsoft' },
-    { name: 'Autodesk' },
-    { name: 'Adobe' }
+Software.create!([
+    { name: 'Word', vendor_id: 2, version: '2015.64.1_R', year: 2015, employee_id: 1, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2016,9,1), hardware_id: 1, custodian_id: 1 },
+    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, employee_id: 3, license_start_date: Date.new(2017,3,11), license_end_date: Date.new(2018,3,11), hardware_id: 2, custodian_id: 3 }
 ])
