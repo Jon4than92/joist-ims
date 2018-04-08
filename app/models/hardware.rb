@@ -1,7 +1,9 @@
 class Hardware < ApplicationRecord
   belongs_to :manufacturer
   belongs_to :room
-  belongs_to :employee, optional: true
+  belongs_to :assigned_to, class_name: 'Employee', optional: true
+  belongs_to :created_by, class_name: 'Employee', optional: true
+  belongs_to :updated_by, class_name: 'Employee', optional: true
   belongs_to :custodian, optional: true
   has_many :software
 
@@ -17,6 +19,8 @@ class Hardware < ApplicationRecord
 
   before_validation :check_year
   before_validation :set_assigned_date
+  before_validation :set_created_by
+  before_validation :set_updated_by
 
   private
     def check_year
@@ -28,19 +32,18 @@ class Hardware < ApplicationRecord
     end
 
     def set_assigned_date
-      if self.employee_id?
+      if self.assigned_to_id?
         self.assigned_date = Date.today
       else
         self.assigned_date = nil
       end
     end
 
-#  def last_updated_by_current_account() #
-#    if self.last_updated_by != current_account.id
-#      errors.add(:last_updated_by, 'Must be updated by current user')
-#    else
-#      self.last_updated_by == nil
-#    end
-#  end
+    def set_created_by
+      self.created_by = current_active_admin_user if self.new_record? and self.created_by == nil
+    end
 
+    def set_updated_by
+      self.updated_by = current_active_admin_user if !self.new_record?
+    end
 end

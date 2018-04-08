@@ -68,8 +68,8 @@ Custodian.create!([
 ])
 
 Hardware.create!([
-    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, employee_id: 1, custodian_id: 2 },
-    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, employee_id: 3, custodian_id: 3 }
+    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, custodian_id: 2, created_by: Employee.first },
+    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, custodian_id: 3, created_by: Employee.first }
 ])
 
 Software.create!([

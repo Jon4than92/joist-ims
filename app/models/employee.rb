@@ -3,7 +3,8 @@ class Employee < ApplicationRecord
   has_one :account, inverse_of: :employee
   has_many :custodians, inverse_of: :employee
   has_many :custodian_accounts, through: :custodians
-  has_many :hardware
+  has_many :hardware, foreign_key: :assigned_to
+  has_many :hardware, foreign_key: :updated_by_id
   has_many :software
 
   accepts_nested_attributes_for :room
@@ -15,8 +16,8 @@ class Employee < ApplicationRecord
   validates :last_name, presence: true, format: { with: /\A[a-zA-Z -.]+\z/i, message: 'cannot contain numbers or symbols' }
   validates :job_title, presence: true
   validates :room_id, presence: true
-  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'must follow the "example@email.com" format' }
-  validates :phone, presence: true, format: { with: /\A^\d{3}-\d{3}-\d{4}$\z/i, message: 'Must be formatted as: ###-###-####' }
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'must be formatted as email@domain.com' }
+  validates :phone, presence: true, format: { with: /\A\d{3}-\d{3}-\d{4}\z/, message: 'must be formatted as ###-###-####' }
 
   def full_name
     first_name + ' ' + (middle_initial ? middle_initial + ' ' : '') + last_name

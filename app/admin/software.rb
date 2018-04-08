@@ -2,12 +2,10 @@ ActiveAdmin.register Software do
   permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
 
   config.sort_order = 'license_end_date_asc'
-  config.per_page = 30
 
   scope :all, :default => true
   scope :renewal_urgent do |software|
     software.where('license_end_date <= ?', Date.today + 1.month)
-
   end
   scope :expiring_soon do |software|
     software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)

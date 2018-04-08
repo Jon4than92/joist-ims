@@ -11,13 +11,15 @@ class CreateHardware < ActiveRecord::Migration[5.1]
       t.string :condition, limit: 25, null: false
       t.text :notes
       t.references :room, foreign_key: { on_update: :cascade, on_delete: :nullify }, null: false
-      t.references :employee, foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.date :assigned_date
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }
 
       t.timestamps
     end
 
+    add_reference :hardware, :assigned_to, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
+    add_reference :hardware, :updated_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
+    add_reference :hardware, :created_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
     add_index :hardware, :tag_num, unique: true
     add_index :hardware, :serial_num, unique: true
   end
