@@ -1,5 +1,5 @@
 ActiveAdmin.register Vendor do
-  menu parent: 'Lists'
+  menu parent: 'Lists', priority: 3
 
   permit_params :name
 

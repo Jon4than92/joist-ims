@@ -62,8 +62,7 @@ ActiveAdmin.register Hardware do
       f.input :cost, label: 'Cost ($)', required: true
       f.input :condition, required: true
       f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
-      f.input :employee_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
-      f.input :assigned_date, as: :datepicker, input_html: { placeholder: Date.today }
+      f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }
     end
@@ -71,7 +70,7 @@ ActiveAdmin.register Hardware do
   end
 
   show do
-    attributes_table :title => 'Hardware' do
+    attributes_table title: 'Hardware' do
       row :name
       row 'Manufacturer' do |hardware|
         link_to hardware.manufacturer.name, admin_manufacturer_path(hardware.manufacturer)
@@ -102,7 +101,8 @@ ActiveAdmin.register Hardware do
       row :notes
     end
 
-    attributes_table :title => 'Metadata' do
+=begin
+    attributes_table title: 'Metadata' do
       row :created_at
       row 'Created by' do |hardware|
         link_to hardware.employee, admin_employee_path(hardware.created_by)
@@ -112,6 +112,7 @@ ActiveAdmin.register Hardware do
         link_to hardware.employee, admin_employee_path(hardware.updated_by)
       end
     end
+=end
   end
 
 end

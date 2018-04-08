@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
     <list default="true" id="b59315df-00c6-4197-a81f-69da1c5007d9" name="Default" comment="Merge branch 'master' of gitlab.com:4375/joist-ims into temp&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/migrate/20180407174208_add_last_updated_by_to_hardware.rb" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/db/migrate/20180407181107_add_last_updated_by_to_employees.rb" afterPath="" />
@@ -25,11 +24,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/seeds.rb" afterPath="$PROJECT_DIR$/db/seeds.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/joist-ims.iml" afterPath="$PROJECT_DIR$/joist-ims.iml" />
-=======
     <list default="true" id="b59315df-00c6-4197-a81f-69da1c5007d9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/d711c53a-1e83-4163-a86f-7b22dcde9605.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/d711c53a-1e83-4163-a86f-7b22dcde9605.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
->>>>>>> Stashed changes
     </list>
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,10 +135,8 @@
       <file leaf-file-name="hardware.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/admin/hardware.rb">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
             <state relative-caret-position="530">
               <caret line="106" column="0" lean-forward="false" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-=======
             <state relative-caret-position="-238">
               <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
               <folding />
@@ -154,7 +149,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
               <caret line="62" column="13" lean-forward="false" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
->>>>>>> Stashed changes
               <folding />
             </state>
           </provider>
@@ -163,13 +157,10 @@
       <file leaf-file-name="hardware.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/hardware.rb">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
             <state relative-caret-position="136">
               <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-=======
             <state relative-caret-position="340">
               <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
->>>>>>> Stashed changes
               <folding />
             </state>
           </provider>
@@ -803,12 +794,10 @@
   </component>
   <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="false" />
   <component name="TaskManager">
-<<<<<<< Updated upstream
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="879000" />
-=======
     <task active="true" id="Default" summary="Default task">
       <changelist id="b59315df-00c6-4197-a81f-69da1c5007d9" name="Default" comment="Merge branch 'master' of gitlab.com:4375/joist-ims into temp&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
       <created>1523151690501</created>
@@ -829,7 +818,6 @@
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="4614000" />
->>>>>>> Stashed changes
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1425" extended-state="6" />
@@ -867,8 +855,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32816136" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
-<<<<<<< Updated upstream
-=======
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
@@ -879,7 +865,6 @@
     <MESSAGE value="Changes on changes. Added default scope for software &amp; cleaned everything since the messed up merge. Contains updated hardware changes &amp; corrected DB.&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <option name="LAST_COMMIT_MESSAGE" value="Changes on changes. Added default scope for software &amp; cleaned everything since the messed up merge. Contains updated hardware changes &amp; corrected DB.&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
   </component>
->>>>>>> Stashed changes
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="15" />
@@ -1237,13 +1222,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/hardware.rb">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
         <state relative-caret-position="136">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-=======
         <state relative-caret-position="-238">
           <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
->>>>>>> Stashed changes
           <folding />
         </state>
       </provider>
@@ -1258,26 +1240,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/application_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
         <state relative-caret-position="340">
           <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
->>>>>>> Stashed changes
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/employee.rb">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< Updated upstream
         <state relative-caret-position="187">
           <caret line="11" column="64" lean-forward="true" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
-=======
         <state relative-caret-position="442">
           <caret line="62" column="13" lean-forward="false" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
->>>>>>> Stashed changes
           <folding />
         </state>
       </provider>

@@ -22,6 +22,10 @@
   font-weight: bold;
   color: #5796da;
 
+  &.delete_link {
+    color: #ff2825;
+  }
+
   &:hover {
     text-decoration: underline;
   }

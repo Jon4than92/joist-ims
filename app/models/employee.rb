@@ -3,8 +3,9 @@ class Employee < ApplicationRecord
   has_one :account, inverse_of: :employee
   has_many :custodians, inverse_of: :employee
   has_many :custodian_accounts, through: :custodians
-  has_many :hardware, foreign_key: :assigned_to
-  has_many :hardware, foreign_key: :updated_by_id
+  has_many :assigned_hardware, class_name: 'Hardware', foreign_key: :assigned_to_id
+  has_many :updated_hardware, class_name: 'Hardware', foreign_key: :updated_by_id
+  has_many :created_hardware, class_name: 'Hardware', foreign_key: :created_by_id
   has_many :software
 
   accepts_nested_attributes_for :room

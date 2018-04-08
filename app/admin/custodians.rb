@@ -1,5 +1,5 @@
 ActiveAdmin.register Custodian do
-  menu parent: 'Lists'
+  menu parent: 'Lists', priority: 1
 
   permit_params :employee_id, :custodian_account_id
 

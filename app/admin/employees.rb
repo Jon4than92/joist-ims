@@ -48,11 +48,11 @@ ActiveAdmin.register Employee do
       f.input :last_name, required: true
       f.input :job_title, required: true
       if f.object.new_record?
-        f.input :email, required: true, placeholder: 'email@domain.com', as: :email, hint: 'Required entry format: email@domain.com'
+        f.input :email, required: true, placeholder: 'email@domain.com', as: :email, hint: 'Required format: email@domain.com'
       else
         f.input :email, input_html: { disabled: true, readonly: true }
       end
-      f.input :phone, placeholder: '123-456-7890', as: :phone, hint: 'Required entry format: ###-###-####', required: true
+      f.input :phone, placeholder: '123-456-7890', as: :phone, hint: 'Required format: ###-###-####', required: true
       # f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
       f.input :room_id, required: true, as: :nested_select,
                         level_1: { attribute: :building_id, collection: Building.all },
@@ -60,14 +60,14 @@ ActiveAdmin.register Employee do
       f.fields_for :account, f.object.account || f.object.build_account do |a|
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
-      f.input :custodian_account_ids, label: 'Custodian accounts', as: :select, multiple: true, collection: CustodianAccount.all.map{|u| [u.name, u.id]}
+      f.input :custodian_account_ids, label: 'Custodian accounts', as: :select, multiple: true, collection: CustodianAccount.all.map{|u| [u.name, u.id]}, hint: 'Ctrl+Click to select multiple accounts'
       f.input :active, required: true if !f.object.new_record?
     end
     f.actions
   end
 
   show do |e|
-    attributes_table :title => 'Employee' do
+    attributes_table title: 'Employee' do
       row :full_name
       row :job_title
       row :email
@@ -90,7 +90,7 @@ ActiveAdmin.register Employee do
       row :active
     end
 
-    attributes_table :title => 'Account' do
+    attributes_table title: 'Account' do
       row 'Last sign in' do
         e.account.last_sign_in_at
       end
@@ -105,7 +105,7 @@ ActiveAdmin.register Employee do
       end
     end
 
-    attributes_table :title => 'Metadata' do
+    attributes_table title: 'Metadata' do
       row :created_at
       row :updated_at
     end

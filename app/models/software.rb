@@ -22,23 +22,23 @@ class Software < ApplicationRecord
 #  validates :set_expiration_status, :inclusion => { :in => ['Renew Now', 'Expiring Soon', 'License Valid'] }
 
   def set_expiration_status
-    if (self.active == false)
+    if self.active == false
       status_tag = 'License Expired'
-    elsif (self.license_end_date <= Date.today + 1.month && self.active = true)
+    elsif self.license_end_date <= Date.today + 1.month && self.active = true
       status_tag = 'Renewal Urgent'
-    elsif (self.license_end_date > Date.today + 1.month && self.license_end_date < Date.today + 3.months && self.active = true)
+    elsif self.license_end_date > Date.today + 1.month && self.license_end_date < Date.today + 3.months && self.active = true
       status_tag = 'Expiring Soon'
    #   status_tag = 'Expiring in ' + "#{self.calc_time_remaining} days"
-    else (self.license_end_date > Date.today + 3.months && self.active = true)
+    else self.license_end_date > Date.today + 3.months && self.active = true
       status_tag = 'License Valid'
     end
   end
 
-    def calc_time_remaining
-      end_date = self.license_end_date
-      date_now = Date.today()
-      time_remaining = (end_date - date_now).to_i
-    end
+  def calc_time_remaining
+    end_date = self.license_end_date
+    date_now = Date.today
+    time_remaining = (end_date - date_now).to_i
+  end
 
   private
     def check_license_dates
@@ -48,7 +48,6 @@ class Software < ApplicationRecord
         end
       end
     end
-
 
     def set_assigned_date
       if self.employee_id?

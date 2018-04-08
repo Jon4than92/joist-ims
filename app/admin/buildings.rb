@@ -1,5 +1,5 @@
 ActiveAdmin.register Building do
-  menu parent: 'Lists'
+  menu parent: 'Lists', priority: 6
 
   permit_params :name
 
