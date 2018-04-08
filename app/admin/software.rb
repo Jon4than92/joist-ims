@@ -3,15 +3,25 @@ ActiveAdmin.register Software do
 
   config.sort_order = 'license_end_date_asc'
 
-  scope :all, :default => true
+#  scope :all, :default => true do |software|
+#    software.where('active != ?', false)
+#  end
+
+  scope :all
+  scope :active, :default => :true do |software|
+    software.where('active = ?', true)
+  end
   scope :renewal_urgent do |software|
-    software.where('license_end_date <= ?', Date.today + 1.month)
+    software.where('license_end_date <= ? and active = ?', Date.today + 1.month, true)
   end
   scope :expiring_soon do |software|
     software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)
   end
   scope :license_valid do |software|
     software.where('license_end_date > ?', Date.today + 3.months)
+  end
+  scope :license_expired do |software|
+    software.where('active = ?', false)
   end
 
   index do
@@ -48,7 +58,7 @@ ActiveAdmin.register Software do
 
   filter :name_cont, label: 'Name'
   filter :license_start_date_and_license_end_date, label: 'License date range', as: :date_range
-  filter :active, as: :check_boxes, collection: [['Expired license', false]], label: ''
+#  filter :active, as: :check_boxes, collection: [['Active', false]], label: ''
 
   form do |f|
     f.semantic_errors *f.object.errors.keys

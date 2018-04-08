@@ -41,7 +41,7 @@ class SoftwareController < ApplicationController
   # PATCH/PUT /software/1.json
   def update
     respond_to do |format|
-      if @software.update(software_params)
+      if @software.update(permitted_params[:software])
         format.html { redirect_to @software, notice: 'Software was successfully updated.' }
         format.json { render :show, status: :ok, location: @software }
       else
@@ -54,7 +54,7 @@ class SoftwareController < ApplicationController
   # DELETE /software/1
   # DELETE /software/1.json
   def destroy
-    @software.destroy
+    @software.destroy(permitted_params[:software])
     respond_to do |format|
       format.html { redirect_to software_index_url, notice: 'Software was successfully deleted.' }
       format.json { head :no_content }

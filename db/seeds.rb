@@ -74,5 +74,5 @@ Hardware.create!([
 
 Software.create!([
     { name: 'Word', vendor_id: 2, version: '2015.64.1_R', year: 2015, employee_id: 1, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2016,9,1), hardware_id: 1, custodian_id: 1 },
-    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, employee_id: 3, license_start_date: Date.new(2017,3,11), license_end_date: Date.new(2018,3,11), hardware_id: 2, custodian_id: 3 }
+    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, employee_id: 3, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2018,3,11), hardware_id: 2, custodian_id: 3 }
 ])
