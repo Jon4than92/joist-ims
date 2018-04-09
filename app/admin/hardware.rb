@@ -5,8 +5,13 @@ ActiveAdmin.register Hardware do
 
   controller do
     def scoped_collection
-      end_of_association_chain.includes(room: :building)
+      end_of_association_chain.includes(room: :building, assigned_to: :account, updated_by: :account, created_by: :account)
     end
+  end
+
+  before_create do |hardware|
+    hardware.created_by_id = current_user.id if new_record?
+    hardware.updated_by_id = current_user.id if !new_record?
   end
 
   index do
@@ -65,6 +70,11 @@ ActiveAdmin.register Hardware do
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }
+      if f.object.new_record?
+        f.input :created_by_id, as: :hidden, value: current_account.id
+      else
+        f.input :updated_by_id, as: :hidden, value: current_account.id
+      end
     end
     f.actions
   end
@@ -79,8 +89,8 @@ ActiveAdmin.register Hardware do
       row :model_num
       row :tag_num
       row :serial_num
-      row 'Cost ($)' do |hardware|
-        hardware.cost
+      row 'Cost' do |hardware|
+        number_to_currency(hardware.cost, unit: '$')
       end
       row :condition
       row 'Building' do |hardware|
@@ -89,30 +99,26 @@ ActiveAdmin.register Hardware do
       row 'Room' do |hardware|
         link_to hardware.room.name, admin_room_path(hardware.room)
       end
-=begin
       row 'Assigned to employee' do |hardware|
-        link_to hardware.employee.full_name, admin_employee_path(hardware.employee)
+        link_to hardware.assigned_to.full_name, admin_employee_path(hardware.assigned_to)
       end
       row :assigned_date
       row 'Assigned to custodian' do |hardware|
-        link_to hardware.custodian.employee.first_name, admin_custodian_path(hardware.custodian.employee)
+        link_to hardware.custodian.employee.full_name, admin_custodian_path(hardware.custodian.employee)
       end
-=end
       row :notes
     end
 
-=begin
     attributes_table title: 'Metadata' do
       row :created_at
       row 'Created by' do |hardware|
-        link_to hardware.employee, admin_employee_path(hardware.created_by)
+        link_to hardware.created_by.full_name, admin_employee_path(hardware.created_by)
       end
       row :updated_at
       row 'Last updated by' do |hardware|
-        link_to hardware.employee, admin_employee_path(hardware.updated_by)
+        link_to hardware.updated_by.full_name, admin_employee_path(hardware.updated_by)
       end
     end
-=end
   end
 
 end

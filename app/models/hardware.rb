@@ -19,8 +19,8 @@ class Hardware < ApplicationRecord
 
   before_validation :check_year
   before_validation :set_assigned_date
-  before_validation :set_created_by
-  before_validation :set_updated_by
+  #before_validation :set_created_by
+  #before_validation :set_updated_by
 
   private
     def check_year
@@ -40,10 +40,10 @@ class Hardware < ApplicationRecord
     end
 
     def set_created_by
-      self.created_by = current_account if self.new_record? and self.created_by == nil
+      self.created_by = current_account.id if self.new_record? and self.created_by == nil
     end
 
     def set_updated_by
-      self.updated_by = current_account if !self.new_record?
+      self.updated_by = current_account.id if !self.new_record?
     end
 end
