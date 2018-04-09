@@ -17,9 +17,9 @@ class CreateHardware < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_reference :hardware, :assigned_to, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
-    add_reference :hardware, :updated_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
-    add_reference :hardware, :created_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
+    add_reference :hardware, :assigned_to_id, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
+    add_reference :hardware, :updated_by_id, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
+    add_reference :hardware, :created_by_id, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
     add_index :hardware, :tag_num, unique: true
     add_index :hardware, :serial_num, unique: true
   end

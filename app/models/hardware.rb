@@ -40,10 +40,10 @@ class Hardware < ApplicationRecord
     end
 
     def set_created_by
-      self.created_by = current_account if self.new_record? and self.created_by == nil
+      self.created_by_id = current_account.id if self.new_record? and self.created_by == nil
     end
 
     def set_updated_by
-      self.updated_by = current_account if !self.new_record?
+      self.updated_by = current_active_admin_user.account.id if !self.new_record?
     end
 end

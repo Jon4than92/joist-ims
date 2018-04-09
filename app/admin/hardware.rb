@@ -89,6 +89,9 @@ ActiveAdmin.register Hardware do
       row 'Room' do |hardware|
         link_to hardware.room.name, admin_room_path(hardware.room)
       end
+      row 'Last Updated by', :updated_by_id do |hardware|
+        link_to hardware.employee.full_name, admin_employee_path(hardware.employee.id)
+      end
 =begin
       row 'Assigned to employee' do |hardware|
         link_to hardware.employee.full_name, admin_employee_path(hardware.employee)
@@ -99,6 +102,7 @@ ActiveAdmin.register Hardware do
       end
 =end
       row :notes
+
     end
 
 =begin
