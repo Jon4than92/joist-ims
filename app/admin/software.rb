@@ -1,5 +1,5 @@
 ActiveAdmin.register Software do
-  permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :active
+  permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :assigned_to_id, :active
 
   config.sort_order = 'license_end_date_asc'
 
@@ -18,6 +18,11 @@ ActiveAdmin.register Software do
   end
   scope :license_expired do |software|
     software.where('license_end_date <= ?', Date.today)
+  end
+
+  before_create do |software|
+    software.created_by_id = current_account.id if software.new_record?
+    software.updated_by_id = current_account.id if software.new_record?
   end
 
   index do
