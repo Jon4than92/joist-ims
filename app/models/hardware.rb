@@ -18,16 +18,21 @@ class Hardware < ApplicationRecord
   validates :room_id, presence: true
 
   before_validation :check_year
+  before_validation :check_cost
   before_validation :set_assigned_date
-  #before_validation :set_created_by
-  #before_validation :set_updated_by
 
   private
     def check_year
       if self.year > Date.today.year
         self.errors.add(:year, 'cannot be greater than ' + Date.today.year)
-      elsif self.year < 1900
-        self.errors.add(:year, 'cannot be less than 1900')
+      elsif self.year < 0
+        self.errors.add(:year, 'cannot be negative')
+      end
+    end
+
+    def check_cost
+      if self.cost < 0
+        self.errors.add(:cost, 'cannot be negative')
       end
     end
 
@@ -37,13 +42,5 @@ class Hardware < ApplicationRecord
       else
         self.assigned_date = nil
       end
-    end
-
-    def set_created_by
-      self.created_by = current_account.id if self.new_record? and self.created_by == nil
-    end
-
-    def set_updated_by
-      self.updated_by = current_account.id if !self.new_record?
     end
 end

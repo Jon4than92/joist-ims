@@ -48,7 +48,7 @@ ActiveAdmin.register Hardware do
   filter :notes_cont, label: 'Notes'
   filter :room_name_cont, label: 'Room'
   filter :room_building_name_cont, label: 'Building'
-  #filter :employee_first_name_cont, label: 'Assigned to (first name)'
+  filter :assigned_to_first_name_cont, label: 'Assigned to (first name)'
   #filter :employee_last_name_cont, label: 'Assigned to (last name)'
   filter :assigned_date, as: :date_range
   #filter :custodian_employee_first_name_cont, label: 'Custodian (first name)'
@@ -64,16 +64,16 @@ ActiveAdmin.register Hardware do
       f.input :model_num, required: true
       f.input :tag_num, required: true
       f.input :serial_num, required: true
-      f.input :cost, label: 'Cost ($)', required: true
+      f.input :cost, label: 'Cost ($)', required: true, input_html: { min: 0 }
       f.input :condition, required: true
       f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }
       if f.object.new_record?
-        f.input :created_by_id, as: :hidden, value: current_account.id
+        f.input :created_by_id, as: :hidden, input_html: { value: current_account.employee_id }
       else
-        f.input :updated_by_id, as: :hidden, value: current_account.id
+        f.input :updated_by_id, as: :hidden, input_html: { value: current_account.employee_id }
       end
     end
     f.actions
@@ -100,23 +100,41 @@ ActiveAdmin.register Hardware do
         link_to hardware.room.name, admin_room_path(hardware.room)
       end
       row 'Assigned to employee' do |hardware|
-        link_to hardware.assigned_to.full_name, admin_employee_path(hardware.assigned_to)
+        if hardware.assigned_to_id?
+          txt = []
+          txt << link_to(hardware.assigned_to.full_name, admin_employee_path(hardware.assigned_to))
+          txt << " on #{hardware.assigned_date.in_time_zone('Central Time (US & Canada)').strftime("%B %d, %Y")}"
+          txt.join.html_safe
+        else
+          '<span class="empty">Empty</span>'.html_safe
+        end
       end
-      row :assigned_date
       row 'Assigned to custodian' do |hardware|
-        link_to hardware.custodian.employee.full_name, admin_custodian_path(hardware.custodian.employee)
+        if hardware.custodian_id?
+          link_to hardware.custodian.employee.full_name, admin_custodian_path(hardware.custodian.employee)
+        else
+          '<span class="empty">Empty</span>'.html_safe
+        end
       end
       row :notes
     end
 
     attributes_table title: 'Metadata' do
-      row :created_at
       row 'Created by' do |hardware|
-        link_to hardware.created_by.full_name, admin_employee_path(hardware.created_by)
+        txt = []
+        txt << (hardware.created_by_id? ? link_to(hardware.created_by.full_name, admin_employee_path(hardware.created_by)) : '<strong>Deleted User</strong>')
+        txt << " on #{hardware.created_at.in_time_zone('Central Time (US & Canada)').strftime("%B %d, %Y (%I:%M%P)")}"
+        txt.join.html_safe
       end
-      row :updated_at
       row 'Last updated by' do |hardware|
-        link_to hardware.updated_by.full_name, admin_employee_path(hardware.updated_by)
+        if hardware.updated_by_id?
+          txt = []
+          txt << link_to(hardware.updated_by.full_name, admin_employee_path(hardware.updated_by))
+          txt << " on #{hardware.updated_at.in_time_zone('Central Time (US & Canada)').strftime("%B %d, %Y (%I:%M%P)")}"
+          txt.join.html_safe
+        else
+          '<span class="empty">Empty</span>'.html_safe
+        end
       end
     end
   end
