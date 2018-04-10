@@ -31,14 +31,17 @@ ActiveAdmin.register Employee do
     actions
   end
 
-  filter :first_name_cont, label: 'First name'
-  filter :last_name_cont, label: 'Last name'
+  filter :first_name_or_middle_initial_or_last_name_cont, label: 'Name'
   filter :job_title_cont, label: 'Job title'
   filter :email_cont, label: 'Email'
   filter :phone_cont, label: 'Phone'
   filter :room_name_cont, as: :string, label: 'Room'
   filter :room_building_name_cont, as: :string, label: 'Building'
   filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: ''
+  filter :created_at, as: :date_range
+  #filter :created_by_cont, label: 'Created by'
+  filter :updated_at, as: :date_range
+  #filter :updated_by_cont, label: 'Updated by'
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
@@ -48,12 +51,11 @@ ActiveAdmin.register Employee do
       f.input :last_name, required: true
       f.input :job_title, required: true
       if f.object.new_record?
-        f.input :email, required: true, placeholder: 'email@domain.com', as: :email, hint: 'Required format: email@domain.com'
+        f.input :email, required: true, as: :email, hint: 'Required format: email@domain.com'
       else
         f.input :email, input_html: { disabled: true, readonly: true }
       end
-      f.input :phone, placeholder: '123-456-7890', as: :phone, hint: 'Required format: ###-###-####', required: true
-      # f.input :room_id, label: 'Location', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}
+      f.input :phone, as: :phone, hint: 'Required format: ###-###-####', required: true
       f.input :room_id, required: true, as: :nested_select,
                         level_1: { attribute: :building_id, collection: Building.all },
                         level_2: { attribute: :room_id, collection: Room.all }
@@ -61,7 +63,7 @@ ActiveAdmin.register Employee do
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
       end
       f.input :custodian_account_ids, label: 'Custodian accounts', as: :select, multiple: true, collection: CustodianAccount.all.map{|u| [u.name, u.id]}, hint: 'Ctrl+Click to select multiple accounts'
-      f.input :active, required: true if !f.object.new_record?
+      f.input :active, required: true
     end
     f.actions
   end

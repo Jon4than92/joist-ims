@@ -24,7 +24,5 @@ module JoistIms
 
     config.assets.js_compressor  = :uglify
     config.assets.css_compressor = :scss
-
-    config.public_file_server.enabled
   end
 end

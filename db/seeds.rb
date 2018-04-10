@@ -68,11 +68,12 @@ Custodian.create!([
 ])
 
 Hardware.create!([
-    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, custodian_id: 2, created_by: Employee.first },
-    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, custodian_id: 3, created_by: Employee.first }
+    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, custodian_id: 2 },
+    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, custodian_id: 3 }
 ])
 
 Software.create!([
-    { name: 'Word', vendor_id: 2, version: '2015.64.1_R', year: 2015, employee_id: 1, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2016,9,1), hardware_id: 1, custodian_id: 1 },
-    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, employee_id: 3, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2018,3,11), hardware_id: 2, custodian_id: 3 }
+    { name: 'Word', vendor_id: 2, version: '2015.64.1_A', year: 2015, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2018,2,5), hardware_id: 1, custodian_id: 1 },
+    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2018,5,26), hardware_id: 2, custodian_id: 3 },
+    { name: '3dsMax', vendor_id: 3, version: '7.2.1_R3', year: 2018, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,3,11), hardware_id: 1, custodian_id: 2 }
 ])

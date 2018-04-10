@@ -12,18 +12,19 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
-// Overriding any non-variable SASS must be done after the fact.
-// For example, to change the default status-tag color:
-//
-//   .status_tag { background: #6090DB; }
+$color-green: #38bc33;
+$color-orange: #ff8c00;
+$color-red: #ff2825;
+$color-lightblue: #5796da;
+$color-checkbox-border: #c9d0d6;
 
 #main_content table tbody a {
   text-decoration: none;
   font-weight: bold;
-  color: #5796da;
+  color: $color-lightblue;
 
   &.delete_link {
-    color: #ff2825;
+    color: $color-red;
   }
 
   &:hover {
@@ -33,20 +34,20 @@
 
 body.logged_out .flash {
   text-shadow: none;
-  color: #f00;
+  color: $color-red;
 }
 
 abbr[title] {
-  color: #f00;
+  color: $color-red;
   text-decoration: none;
 }
 
 .field_with_errors select {
-  border: 1px solid #932419
+  border: 1px solid $color-red
 }
 
 #sidebar fieldset.choices {
-  border: 1px solid #c9d0d6;
+  border: 1px solid $color-checkbox-border;
   height: 20px;
   margin-top: 20px;
   border-radius: 3px;
@@ -64,8 +65,9 @@ abbr[title] {
   }
 }
 
-body.edit .boolean label {
-  border: 1px solid #c9d0d6;
+body.edit .boolean label,
+body.new .boolean label {
+  border: 1px solid $color-checkbox-border;
   height: 28px;
   border-radius: 3px;
   box-sizing: border-box;
@@ -79,16 +81,16 @@ body.edit .boolean label {
   border-radius: 3px;
 
   &.license_valid {
-    border: 1px solid #38bc33;
-    color: #38bc33;
+    border: 1px solid $color-green;
+    color: $color-green;
   }
   &.renewal_urgent {
-    border: 1px solid #ff2825;
-    color: #ff2825;
+    border: 1px solid $color-red;
+    color: $color-red;
   }
   &.expiring_soon {
-    border: 1px solid #ff8c00;
-    color: #ff8c00;
+    border: 1px solid $color-orange;
+    color: $color-orange;
   }
   &.license_expired {
     border: 1px solid #323232;
@@ -96,8 +98,24 @@ body.edit .boolean label {
   }
 }
 
-.header .tabs .current.has_nested ul {
-  li.current a {
-    background: #686f74 !important;
+.header {
+  #tabs .current.has_nested ul {
+    li.current a {
+      background: #686f74 !important;
+    }
+  }
+  #utility_nav {
+    #current_account:before {
+      content: "Hello, ";
+      margin-right: -8px;
+      transition: margin-right 0.1s ease;
+    }
+    #current_account:hover:before {
+      margin-right: 0px;
+      transition: margin-right 0.1s ease;
+    }
+    #logout:hover a {
+      background-color: $color-red;
+    }
   }
 }
