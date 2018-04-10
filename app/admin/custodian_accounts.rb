@@ -1,5 +1,5 @@
 ActiveAdmin.register CustodianAccount do
-  menu parent: 'Lists', priority: 2
+  menu parent: 'Lists', priority: 2, if: proc { current_account.account_type.name != 'Standard' }
 
   permit_params :name,
                 custodian_attributes: [:id, :employee_id, :_destroy]

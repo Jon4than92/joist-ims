@@ -1,5 +1,5 @@
 ActiveAdmin.register Room do
-  menu parent: 'Lists', priority: 5
+  menu parent: 'Lists', priority: 5, if: proc { current_account.account_type.name != 'Standard' }
 
   permit_params :name, :building_id
 

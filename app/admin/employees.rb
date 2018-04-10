@@ -1,17 +1,32 @@
 ActiveAdmin.register Employee do
-  #menu  :if => proc{ current_account.account_type.name == 'Standard' }, label: 'Employees test'
-  permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active, custodian_account_ids: [],
+  permit_params :id, :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active, custodian_account_ids: [],
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
                 account_attributes: [:id, :employee_id, :account_type_id, :email, :password, :password_confirmation, :_destroy],
                 account_types_attributes: [:id, :name, :_destroy],
                 custodians_attributes: [:id, :employee_id, :custodian_account_id, :_destroy]
 
+  menu if: proc { current_account.account_type.name != 'Standard' }
+
   config.sort_order = 'last_name_desc'
 
   controller do
     def scoped_collection
       end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
+    end
+
+    before_action only: [:show, :edit, :update, :destroy] do
+      @employee = Employee.find(params[:id])
+    end
+
+    before_action :validate_show, only: [:show]
+    def validate_show
+      redirect_to admin_employees_path unless current_account.employee.id == @employee.id || current_account.account_type.name != 'Standard'
+    end
+
+    before_action :validate_other, only: [:edit, :update, :destroy]
+    def validate_other
+      redirect_to admin_employees_path if current_account.account_type.name == 'Standard'
     end
   end
 

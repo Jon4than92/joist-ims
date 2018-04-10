@@ -1,5 +1,5 @@
-ActiveAdmin.register_page "Dashboard" do
-  menu priority: 1, label: 'Dashboard'
+ActiveAdmin.register_page 'Dashboard' do
+  menu priority: 1, label: 'Dashboard', if: proc { current_account.account_type.name != 'Standard' }
 
   content title: 'Dashboard' do
     columns do

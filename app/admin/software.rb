@@ -1,6 +1,8 @@
 ActiveAdmin.register Software do
   permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :assigned_to_id, :active
 
+  menu if: proc { current_account.account_type.name != 'Standard' }
+
   config.sort_order = 'license_end_date_asc'
 
   scope :all, default: :true
