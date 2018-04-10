@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(version: 12) do
   add_foreign_key "hardware", "custodians", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "employees", column: "assigned_to_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "employees", column: "created_by_id", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "hardware", "employees", column: "updated_by_id", on_delete: :nullify
+  add_foreign_key "hardware", "employees", column: "updated_by_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "hardware", "manufacturers", on_update: :cascade, on_delete: :restrict
   add_foreign_key "hardware", "rooms", on_update: :cascade, on_delete: :nullify
   add_foreign_key "manufacturers", "employees", column: "created_by_id", on_update: :cascade, on_delete: :nullify

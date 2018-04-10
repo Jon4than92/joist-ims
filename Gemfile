@@ -20,6 +20,7 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'chartkick'
 gem 'groupdate'
+gem 'cancancan'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

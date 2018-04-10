@@ -1,4 +1,5 @@
 ActiveAdmin.register Employee do
+  #menu  :if => proc{ current_account.account_type.name == 'Standard' }, label: 'Employees test'
   permit_params :first_name, :middle_initial, :last_name, :job_title, :room_id, :email, :phone, :active, custodian_account_ids: [],
                 rooms_attributes: [:id, :building_id, :name, :_destroy],
                 buildings_attributes: [:id, :name, :_destroy],
@@ -14,8 +15,11 @@ ActiveAdmin.register Employee do
     end
   end
 
+  #scope_to :current_account, if: proc{ current_account.account_type.name == 'Standard' }
+ # scope_to :current_account, unless: proc{ current_account.account_type.name == 'Custodian' || current_account.account_type.name == 'Management' }
+
   index do
-    selectable_column
+  if current_account.account_type.name == 'Standard'
     column :full_name do |employee|
       link_to employee.full_name, admin_employee_path(employee)
     end
@@ -28,7 +32,22 @@ ActiveAdmin.register Employee do
     column 'Room', sortable: 'rooms.name' do |employee|
       link_to employee.room.name, admin_room_path(employee.room)
     end
-    actions
+  else
+    selectable_column
+      column :full_name do |employee|
+        link_to employee.full_name, admin_employee_path(employee)
+      end
+      column :email
+      column :job_title
+      column :phone
+      column 'Building', sortable: 'buildings.name' do |employee|
+        link_to employee.room.building.name, admin_building_path(employee.room.building)
+      end
+      column 'Room', sortable: 'rooms.name' do |employee|
+        link_to employee.room.name, admin_room_path(employee.room)
+      end
+      actions
+    end
   end
 
   filter :first_name_or_middle_initial_or_last_name_cont, label: 'Name'
@@ -37,10 +56,13 @@ ActiveAdmin.register Employee do
   filter :phone_cont, label: 'Phone'
   filter :room_name_cont, as: :string, label: 'Room'
   filter :room_building_name_cont, as: :string, label: 'Building'
-  filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: ''
-  filter :created_at, as: :date_range
+  filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: '',
+         if: proc{ current_account.account_type.name == 'Custodian' || current_account.account_type.name == 'Management' }
+  filter :created_at, as: :date_range,
+        if: proc{ current_account.account_type.name == 'Custodian' || current_account.account_type.name == 'Management' }
   #filter :created_by_cont, label: 'Created by'
-  filter :updated_at, as: :date_range
+  filter :updated_at, as: :date_range,
+         if: proc{ current_account.account_type.name == 'Custodian' || current_account.account_type.name == 'Management' }
   #filter :updated_by_cont, label: 'Updated by'
 
   form do |f|
@@ -61,6 +83,11 @@ ActiveAdmin.register Employee do
                         level_2: { attribute: :room_id, collection: Room.all }
       f.fields_for :account, f.object.account || f.object.build_account do |a|
         a.input :account_type_id, label: 'Account type', as: :select, collection: AccountType.all.map{|u| [u.name, u.id]}, required: true
+        if a.object.new_record?
+        else
+          a.input :password
+          a.input :password_confirmation
+        end
       end
       f.input :custodian_account_ids, label: 'Custodian accounts', as: :select, multiple: true, collection: CustodianAccount.all.map{|u| [u.name, u.id]}, hint: 'Ctrl+Click to select multiple accounts'
       f.input :active, required: true
@@ -69,7 +96,7 @@ ActiveAdmin.register Employee do
   end
 
   show do |e|
-    attributes_table title: 'Employee' do
+      attributes_table title: 'Employee' do
       row :full_name
       row :job_title
       row :email

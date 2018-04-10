@@ -9,6 +9,11 @@ ActiveAdmin.register Hardware do
     end
   end
 
+  #scope :assigned_to_you do |hardware|
+  #  hardware.where(:assigned_to == current_account.id)
+  #end
+
+
   before_create do |hardware|
     hardware.created_by_id = current_user.id if new_record?
     hardware.updated_by_id = current_user.id if !new_record?
