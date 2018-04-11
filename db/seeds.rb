@@ -73,7 +73,7 @@ Hardware.create!([
 ])
 
 Software.create!([
-    { name: 'Word', vendor_id: 2, version: '2015.64.1_A', year: 2015, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2018,2,5), hardware_id: 1, custodian_id: 1 },
-    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2018,5,26), hardware_id: 2, custodian_id: 3 },
-    { name: '3dsMax', vendor_id: 3, version: '7.2.1_R3', year: 2018, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,3,11), hardware_id: 1, custodian_id: 2 }
+    { name: 'Word', vendor_id: 2, version: '2015.64.1_A', year: 2015, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2018,2,5), hardware_id: 1, custodian_id: 1, cost: 1500, license_key: 'A231-234AS-5E6TC-ZDSA64' },
+    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2018,5,26), hardware_id: 2, custodian_id: 3, cost: 1200, license_key: '1111-234AS-455DC-D454S' },
+    { name: '3dsMax', vendor_id: 3, version: '7.2.1_R3', year: 2018, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,3,11), hardware_id: 1, custodian_id: 2, cost: 1500, license_key: '1111-234AS-455DC-D454S' }
 ])

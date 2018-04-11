@@ -9,6 +9,8 @@ class CreateSoftware < ActiveRecord::Migration[5.1]
       t.date :license_start_date
       t.date :license_end_date
       t.boolean :active, default: true, null: false
+      t.decimal :cost, precision: 10, scale: 2, null: false
+      t.string :license_key, limit: 50, null: false
       t.references :hardware, foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.references :custodian, foreign_key: { on_update: :cascade, on_delete: :nullify }
 

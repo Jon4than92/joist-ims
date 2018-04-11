@@ -11,14 +11,13 @@ ActiveAdmin.register Hardware do
     end
   end
 
-  scope :assigned_to_you do |hardware|
-    hardware.where(:assigned_to == current_account.id)
-  end
-
+#  scope :assigned_to_you do |hardware|
+#    hardware.where(:assigned_to == current_account.id)
+#  end
 
   before_create do |hardware|
     hardware.created_by_id = current_account.id if hardware.new_record?
-    hardware.updated_by_id = current_account.id if hardware.!new_record?
+    hardware.updated_by_id = current_account.id if hardware.new_record?
   end
 
   index do
@@ -42,6 +41,10 @@ ActiveAdmin.register Hardware do
       hardware.room.name
     end
     actions
+
+    div class: "panel" do
+      h3 "Total Hardware Asset Value: #{ number_to_currency Hardware.search(params[:q]).result.sum(:cost)}"
+    end
   end
 
   filter :name_cont, label: 'Name'

@@ -157,6 +157,8 @@ ActiveRecord::Schema.define(version: 12) do
     t.date "license_start_date"
     t.date "license_end_date"
     t.boolean "active", default: true, null: false
+    t.decimal "cost", precision: 10, scale: 2, null: false
+    t.string "license_key", limit: 50, null: false
     t.bigint "hardware_id"
     t.bigint "custodian_id"
     t.datetime "created_at", null: false

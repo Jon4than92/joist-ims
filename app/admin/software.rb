@@ -1,5 +1,5 @@
 ActiveAdmin.register Software do
-  permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :assigned_to_id, :active
+  permit_params :name, :vendor_id, :version, :year, :employee_id, :assigned_date, :license_start_date, :license_end_date, :hardware_id, :custodian_id, :assigned_to_id, :active, :cost, :license_key
 
   menu if: proc { current_account.account_type.name != 'Standard' }
 
@@ -59,11 +59,20 @@ ActiveAdmin.register Software do
         '--'
       end
     end
+
+    div class: "panel" do
+      h3 "Total Software Value: #{ number_to_currency Software.search(params[:q]).result.sum(:cost)}"
+    end
     actions
+  end
+
+  sidebar :total_software_value do
+    h4 "Total Software Value: #{ number_to_currency Software.sum(:cost) }"
   end
 
   filter :name_cont, label: 'Name'
   filter :license_start_date_and_license_end_date, label: 'License date range', as: :date_range
+  filter :cost, as: :numeric_range_filter
 #  filter :active, as: :check_boxes, collection: [['Active', false]], label: ''
 
   form do |f|
@@ -75,6 +84,8 @@ ActiveAdmin.register Software do
       f.input :year, required: true
       f.input :license_start_date, as: :datepicker, datepicker_options: { min_date: 1.year.ago.to_date }
       f.input :license_end_date, as: :datepicker, datepicker_options: { min_date: :license_start_date.to_s }
+      f.input :cost, label: 'Cost ($)', required: true, input_html: { min: 0 }
+      f.input :license_key, required: true
       f.input :hardware_id, label: 'Installed on hardware', as: :select, collection: Hardware.all.map{|u| [u.name, u.id]}
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| ["#{u.full_name}", u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}

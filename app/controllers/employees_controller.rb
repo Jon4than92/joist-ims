@@ -1,5 +1,7 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
+  #before_action :authenticate_user!
+
 
   # GET /employees
   # GET /employees.json
@@ -15,6 +17,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
+    @employee = current_account.build
     @employee.custodians.build
   end
 
