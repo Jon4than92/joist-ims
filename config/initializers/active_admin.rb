@@ -204,7 +204,6 @@ ActiveAdmin.setup do |config|
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
   # config.register_javascript 'custodian-account-field.js'
-  config.clear_javascripts!
   config.register_javascript 'application'
 
   # == CSV options
@@ -242,12 +241,11 @@ ActiveAdmin.setup do |config|
 
     admin.build_menu :utility_navigation do |menu|
       menu.add label: proc { display_name current_active_admin_user.employee.full_name },
-               url: -> { admin_employee_path(current_active_admin_user.employee_id) },
+               url: -> { admin_profile_path(current_account.employee_id) },
                id: 'current_account',
                if: proc { current_active_admin_user? }
       admin.add_logout_button_to_menu menu
     end
-
   end
 
     # == Download Links

@@ -1,6 +1,8 @@
 ActiveAdmin.register Hardware do
   permit_params :name, :manufacturer_id, :year, :model_num, :tag_num, :serial_num, :cost, :condition, :notes, :room_id, :assigned_to_id, :assigned_date, :custodian_id, :created_by_id, :updated_by_id
 
+  menu if: proc { current_account.account_type.name != 'Standard' }
+
   config.sort_order = 'id_desc'
 
   controller do
