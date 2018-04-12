@@ -1,6 +1,16 @@
 ActiveAdmin.register_page 'Dashboard' do
   menu priority: 1, label: 'Dashboard', if: proc { current_account.account_type.name != 'Standard' }
 
+  controller do
+    before_action :check_account_type, action: :all
+    def check_account_type
+      if current_account.account_type.name == 'Standard'
+        flash[:error] = 'You don\'t have access to that page.'
+        redirect_to admin_employee_path(current_account)
+      end
+    end
+  end
+
   content title: 'Dashboard' do
     columns do
       column do

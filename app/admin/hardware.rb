@@ -9,16 +9,16 @@ ActiveAdmin.register Hardware do
     def scoped_collection
       end_of_association_chain.includes(room: :building, assigned_to: :account, updated_by: :account, created_by: :account)
     end
+
+    before_save do |employee|
+      employee.created_by_id = current_account.employee_id if employee.new_record?
+      employee.updated_by_id = current_account.employee_id if !employee.new_record?
+    end
   end
 
 #  scope :assigned_to_you do |hardware|
 #    hardware.where(:assigned_to == current_account.id)
 #  end
-
-  before_save do |employee|
-    employee.created_by_id = current_account.employee_id if employee.new_record?
-    employee.updated_by_id = current_account.employee_id if !employee.new_record?
-  end
 
   index do
     selectable_column
@@ -71,14 +71,14 @@ ActiveAdmin.register Hardware do
     f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :name, required: true
-      f.input :manufacturer_id, label: 'Manufacturer', as: :select, collection: Manufacturer.all.map{|u| [u.name, u.id]}, required: true
+      f.input :manufacturer_id, label: 'Manufacturer', as: :select, collection: Manufacturer.all.map{|u| [u.name, u.id]}, required: true, input_html: { class: "select2" }
       f.input :year, required: true
       f.input :model_num, required: true
       f.input :tag_num, required: true
       f.input :serial_num, required: true
       f.input :cost, label: 'Cost ($)', required: true, input_html: { min: 0 }
       f.input :condition, required: true
-      f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true
+      f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true, input_html: { class: "select2" }
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }

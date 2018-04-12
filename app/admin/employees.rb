@@ -103,7 +103,7 @@ ActiveAdmin.register Employee do
     if f.object.new_record?
       f.input :email, required: true, as: :email, hint: 'Required format: email@domain.com'
     else
-      f.input :email, input_html: { disabled: true, readonly: true }
+      f.input :email, as: :email, input_html: { disabled: true, class: 'c-field' }
     end
     f.input :phone, as: :phone, hint: 'Required format: ###-###-####', required: true
     f.input :room_id, required: true, as: :nested_select,

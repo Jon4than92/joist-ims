@@ -4,11 +4,21 @@ ActiveAdmin.register Manufacturer do
   permit_params :name
 
   config.sort_order = 'id_desc'
+  controller do
+    before_save do |manufacturer|
+      manufacturer.created_by_id = current_account.employee_id if manufacturer.new_record?
+      manufacturer.updated_by_id = current_account.employee_id if !manufacturer.new_record?
+    end
 
-  before_save do |manufacturer|
-    manufacturer.created_by_id = current_account.employee_id if manufacturer.new_record?
-    manufacturer.updated_by_id = current_account.employee_id if !manufacturer.new_record?
+    before_action :check_account_type, action: :all
+    def check_account_type
+      if current_account.account_type.name == 'Standard'
+        flash[:error] = 'You don\'t have access to that page.'
+        redirect_to admin_employee_path(current_account)
+      end
+    end
   end
+
 
   index do
     selectable_column

@@ -11,12 +11,17 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "activeadmin_blaze_theme/theme";
 
 $color-green: #38bc33;
 $color-orange: #ff8c00;
 $color-red: #ff2825;
 $color-lightblue: #5796da;
 $color-checkbox-border: #c9d0d6;
+
+body.active_admin #tabs > li > a, body.active_admin #utility_nav > li > a {
+  display: inline !important;
+}
 
 #main_content table tbody a {
   text-decoration: none;
@@ -102,6 +107,7 @@ body.new .boolean label {
   #tabs .current.has_nested ul {
     li.current a {
       background: #686f74 !important;
+      display: inline !important;
     }
   }
   #utility_nav {
@@ -109,13 +115,21 @@ body.new .boolean label {
       content: "Hello, ";
       margin-right: -8px;
       transition: margin-right 0.1s ease;
+      display: inline !important;
     }
     #current_account:hover:before {
       margin-right: 0px;
       transition: margin-right 0.1s ease;
+      display: inline !important;
     }
     #logout:hover a {
       background-color: $color-red;
     }
+    &.current_account {
+      display: inline !important;
+    }
   }
+}
+a #current {
+    display: inline !important;
 }

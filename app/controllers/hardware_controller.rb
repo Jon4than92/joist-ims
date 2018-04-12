@@ -1,7 +1,7 @@
 class HardwareController < ApplicationController
   before_action :set_hardware, only: [:show, :edit, :update, :destroy]
 
-  before_filter :assign_user
+  before_action :assign_user
 
   # GET /hardware
   # GET /hardware.json

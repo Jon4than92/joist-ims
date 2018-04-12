@@ -5,10 +5,21 @@ ActiveAdmin.register Vendor do
 
   config.sort_order = 'id_desc'
 
-  before_save do |vendor|
-    vendor.created_by_id = current_account.employee_id if vendor.new_record?
-    vendor.updated_by_id = current_account.employee_id if !vendor.new_record?
+  controller do
+    before_save do |vendor|
+      vendor.created_by_id = current_account.employee_id if vendor.new_record?
+      vendor.updated_by_id = current_account.employee_id if !vendor.new_record?
+    end
+
+    before_action :check_account_type, action: :all
+    def check_account_type
+      if current_account.account_type.name == 'Standard'
+        flash[:error] = 'You don\'t have access to that page.'
+        redirect_to admin_employee_path(current_account)
+      end
+    end
   end
+
 
   index do
     selectable_column

@@ -5,10 +5,23 @@ ActiveAdmin.register CustodianAccount do
 
   config.sort_order = 'name_desc'
 
-  before_save do |custodian_account|
-    custodian_account.created_by_id = current_account.employee_id if custodian_account.new_record?
-    custodian_account.updated_by_id = current_account.employee_id if !custodian_account.new_record?
+
+  controller do
+
+    before_save do |custodian_account|
+      custodian_account.created_by_id = current_account.employee_id if custodian_account.new_record?
+      custodian_account.updated_by_id = current_account.employee_id if !custodian_account.new_record?
+    end
+
+    before_action :check_account_type, action: :all
+    def check_account_type
+      if current_account.account_type.name == 'Standard'
+        flash[:error] = 'You don\'t have access to that page.'
+        redirect_to admin_employee_path(current_account)
+      end
+    end
   end
+
 
   index do
     selectable_column
@@ -24,6 +37,13 @@ ActiveAdmin.register CustodianAccount do
       custodian_account.updated_by_id? ? link_to(custodian_account.updated_by.full_name, admin_employee_path(custodian_account.updated_by)) : ''
     end
     actions
+  end
+
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+    f.inputs do
+      f.input :name, required: true
+    end
   end
 
   filter :name_cont, label: 'Name'

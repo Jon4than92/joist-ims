@@ -22,6 +22,8 @@ gem 'chartkick'
 gem 'groupdate'
 gem 'cancancan'
 gem 'whenever', require: false
+gem 'activeadmin_blaze_theme'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
