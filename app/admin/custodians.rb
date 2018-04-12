@@ -13,7 +13,10 @@ ActiveAdmin.register Custodian do
   index do
     selectable_column
     column 'Name' do |custodian|
-      link_to custodian.name, admin_custodian_path(custodian)
+      link_to custodian.employee.full_name, admin_custodian_path(custodian)
+    end
+    column 'Account' do |custodian|
+      link_to custodian.custodian_account.name, admin_custodian_account_path(custodian.custodian_account)
     end
     column :created_at
     column :updated_at
@@ -21,12 +24,13 @@ ActiveAdmin.register Custodian do
       custodian.created_by_id? ? link_to(custodian.created_by.full_name, admin_employee_path(custodian.created_by)) : ''
     end
     column 'Updated by' do |custodian|
-      custodian.created_by_id? ? link_to(custodian.updated_by.full_name, admin_employee_path(custodian.updated_by)) : ''
+      custodian.updated_by_id? ? link_to(custodian.updated_by.full_name, admin_employee_path(custodian.updated_by)) : ''
     end
     actions
   end
 
-  filter :name_cont, label: 'Name'
+  filter :employee_first_name_or_employee_middle_initial_or_employee_last_name_cont, label: 'Name'
+  filter :custodian_account_name_cont, label: 'Account'
   filter :created_at, as: :date_range
   filter :updated_at, as: :date_range
   filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'

@@ -24,7 +24,7 @@ ActiveAdmin.register Room do
       room.created_by_id? ? link_to(room.created_by.full_name, admin_employee_path(room.created_by)) : ''
     end
     column 'Updated by' do |room|
-      room.created_by_id? ? link_to(room.updated_by.full_name, admin_employee_path(room.updated_by)) : ''
+      room.updated_by_id? ? link_to(room.updated_by.full_name, admin_employee_path(room.updated_by)) : ''
     end
     actions
   end

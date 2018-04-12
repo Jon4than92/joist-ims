@@ -21,7 +21,7 @@ ActiveAdmin.register CustodianAccount do
       custodian_account.created_by_id? ? link_to(custodian_account.created_by.full_name, admin_employee_path(custodian_account.created_by)) : ''
     end
     column 'Updated by' do |custodian_account|
-      custodian_account.created_by_id? ? link_to(custodian_account.updated_by.full_name, admin_employee_path(custodian_account.updated_by)) : ''
+      custodian_account.updated_by_id? ? link_to(custodian_account.updated_by.full_name, admin_employee_path(custodian_account.updated_by)) : ''
     end
     actions
   end

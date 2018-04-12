@@ -21,7 +21,7 @@ ActiveAdmin.register Building do
       building.created_by_id? ? link_to(building.created_by.full_name, admin_employee_path(building.created_by)) : ''
     end
     column 'Updated by' do |building|
-      building.created_by_id? ? link_to(building.updated_by.full_name, admin_employee_path(building.updated_by)) : ''
+      building.updated_by_id? ? link_to(building.updated_by.full_name, admin_employee_path(building.updated_by)) : ''
     end
     actions
   end

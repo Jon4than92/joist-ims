@@ -21,7 +21,7 @@ ActiveAdmin.register Manufacturer do
       manufacturer.created_by_id? ? link_to(manufacturer.created_by.full_name, admin_employee_path(manufacturer.created_by)) : ''
     end
     column 'Updated by' do |manufacturer|
-      manufacturer.created_by_id? ? link_to(manufacturer.updated_by.full_name, admin_employee_path(manufacturer.updated_by)) : ''
+      manufacturer.updated_by_id? ? link_to(manufacturer.updated_by.full_name, admin_employee_path(manufacturer.updated_by)) : ''
     end
     actions
   end

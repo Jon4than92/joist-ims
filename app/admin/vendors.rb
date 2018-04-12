@@ -21,7 +21,7 @@ ActiveAdmin.register Vendor do
       vendor.created_by_id? ? link_to(vendor.created_by.full_name, admin_employee_path(vendor.created_by)) : ''
     end
     column 'Updated by' do |vendor|
-      vendor.created_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : ''
+      vendor.udpated_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : ''
     end
     actions
   end
