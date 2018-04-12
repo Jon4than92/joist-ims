@@ -40,4 +40,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.public_file_server.enabled
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 end

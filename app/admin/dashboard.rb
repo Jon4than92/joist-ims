@@ -15,5 +15,16 @@ ActiveAdmin.register_page 'Dashboard' do
         end
       end
     end
+
+    columns do
+      column do
+        panel 'Total cost of hardware for current fiscal year' do
+          fiscal_year_start = Date.new(Date.today.year, 1, 1)
+          fiscal_year_end = Date.new(1.year.from_now.year, 12, 31)
+          data = [['Hardware', Hardware.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost)], ['Software', Software.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost)]]
+          pie_chart data, messages: { empty: 'No data' }
+        end
+      end
+    end
   end
 end

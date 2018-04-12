@@ -15,9 +15,9 @@ ActiveAdmin.register Hardware do
 #    hardware.where(:assigned_to == current_account.id)
 #  end
 
-  before_create do |hardware|
-    hardware.created_by_id = current_account.id if hardware.new_record?
-    hardware.updated_by_id = current_account.id if hardware.new_record?
+  before_save do |employee|
+    employee.created_by_id = current_account.employee_id if employee.new_record?
+    employee.updated_by_id = current_account.employee_id if !employee.new_record?
   end
 
   index do
@@ -42,7 +42,7 @@ ActiveAdmin.register Hardware do
     end
     actions
 
-    div class: "panel" do
+    div class: 'panel' do
       h3 "Total Hardware Asset Value: #{ number_to_currency Hardware.search(params[:q]).result.sum(:cost)}"
     end
   end
@@ -58,12 +58,14 @@ ActiveAdmin.register Hardware do
   filter :notes_cont, label: 'Notes'
   filter :room_name_cont, label: 'Room'
   filter :room_building_name_cont, label: 'Building'
-  filter :assigned_to_first_name_cont, label: 'Assigned to (first name)'
-  #filter :employee_last_name_cont, label: 'Assigned to (last name)'
-  filter :assigned_date, as: :date_range
-  #filter :custodian_employee_first_name_cont, label: 'Custodian (first name)'
-  #filter :custodian_employee_last_name_cont, label: 'Custodian (last name)'
-  #filter :custodian_custodian_account_name_cont, label: 'Custodian account'
+  filter :assigned_to_first_name_or_assigned_to_middle_initial_or_assigned_to_last_name_cont, label: 'Assigned to'
+  filter :assigned_date, as: :date_range, label: 'Date assigned to employee'
+  filter :custodian_employee_first_name_or_custodian_employee_middle_initial_or_custodian_employee_last_name_cont, label: 'Custodian'
+  filter :custodian_custodian_account_name_cont, label: 'Custodian account'
+  filter :created_at, as: :date_range
+  filter :updated_at, as: :date_range
+  filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'
+  filter :updated_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Updated by'
 
   form do |f|
     f.semantic_errors *f.object.errors.keys
@@ -80,11 +82,6 @@ ActiveAdmin.register Hardware do
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }
-      if f.object.new_record?
-        f.input :created_by_id, as: :hidden, input_html: { value: current_account.employee_id }
-      else
-        f.input :updated_by_id, as: :hidden, input_html: { value: current_account.employee_id }
-      end
     end
     f.actions
   end

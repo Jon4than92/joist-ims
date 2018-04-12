@@ -1,7 +1,5 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
-  #before_action :authenticate_user!
-
 
   # GET /employees
   # GET /employees.json

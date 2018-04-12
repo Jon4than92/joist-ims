@@ -115,7 +115,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  config.root_to = 'dashboard#index'
+  config.root_to = 'employees#index'
 
   # == Admin Comments
   #
@@ -242,7 +242,7 @@ ActiveAdmin.setup do |config|
 
     admin.build_menu :utility_navigation do |menu|
       menu.add label: proc { display_name current_active_admin_user.employee.full_name },
-               url: -> { admin_profile_path(current_account.employee_id) },
+               url: -> { profile_admin_employee_path(current_account.employee) },
                id: 'current_account',
                if: proc { current_active_admin_user? }
       admin.add_logout_button_to_menu menu
