@@ -1,0 +1,65 @@
+attributes_table_for assigns[:employee] do
+  row 'Name' do |employee|
+    employee.full_name
+  end
+  row :job_title
+  row :email
+  row :phone
+  row 'Building' do |employee|
+    employee.room.building.name
+  end
+  row 'Room' do |employee|
+    employee.room.name
+  end
+  row 'Account type' do |employee|
+    employee.account.account_type.name
+  end
+  if assigns[:employee].account.account_type.name == 'Custodian'
+    row 'Custodian accounts' do |employee|
+      custodian_list = employee.custodians.map { |custodian| custodian.custodian_account.name }
+      safe_join custodian_list, ', '
+    end
+  end
+end
+
+h3 'Your Hardware'
+table_for assigns[:hardware] do
+  column :name
+  column 'Manufacturer', sortable: 'manufacturers.name' do |hardware|
+    hardware.name
+  end
+  column :model_num
+  column :tag_num
+  column :serial_num
+  column 'Cost' do |hardware|
+    number_to_currency(hardware.cost, unit: '$')
+  end
+  column 'Building', sortable: 'buildings.name' do |hardware|
+    hardware.room.building.name
+  end
+  column 'Room', sortable: 'rooms.name' do |hardware|
+    hardware.room.name
+  end
+end
+
+h3 'Your Software'
+table_for assigns[:software] do
+  column :name
+  column 'Vendor', sortable: 'vendors.name' do |software|
+    software.vendor.name
+  end
+  column :version
+  column :year
+  column :license_start_date
+  column :license_end_date
+  column 'License Status' do |software|
+    status_tag software.set_expiration_status
+  end
+  column 'Assigned Hardware', sortable: 'hardware.name' do |software|
+    if software.hardware_id?
+      software.hardware.name
+    else
+      '--'
+    end
+  end
+end
