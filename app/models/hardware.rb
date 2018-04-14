@@ -13,7 +13,7 @@ class Hardware < ApplicationRecord
   validates :model_num, presence: true
   validates :tag_num, uniqueness: { case_sensitive: false }, presence: true
   validates :serial_num, uniqueness: { case_sensitive: false }, presence: true
-  validates :cost, presence: true
+  #validates_numericality_of  :cost, presence: true, only_integer: true
   validates :condition, presence: true
   validates :room_id, presence: true
 
@@ -31,8 +31,12 @@ class Hardware < ApplicationRecord
     end
 
     def check_cost
-      if self.cost < 0
-        self.errors.add(:cost, 'cannot be negative')
+      if self.cost.is_a? Numeric
+        if self.cost < 0
+          self.errors.add(:cost, 'cannot be negative')
+        end
+      else
+        self.errors.add(:cost, 'must be a numeric value. Strings/symbols not permitted')
       end
     end
 

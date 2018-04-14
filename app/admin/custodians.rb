@@ -56,10 +56,13 @@ ActiveAdmin.register Custodian do
     f.actions
   end
 
-  show do
+  show :title => proc {|custodian| custodian.employee.full_name } do
     attributes_table title: 'Custodian' do
-      row :name
+      row 'Name' do |custodian|
+        link_to custodian.employee.full_name, admin_custodian_path(custodian)
+      end
     end
+
 
     attributes_table title: 'Metadata' do
       row 'Created by' do |custodian|

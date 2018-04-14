@@ -10,6 +10,7 @@ class Software < ApplicationRecord
   validates :vendor_id, presence: true
   validates :version, presence: true
   validates :year, presence: true, format: { with: /\A\d{4}\z/, message: 'must contain only four digits' }
+  #validates_numericality_of :cost, presence: true, only_integer: true
 
   before_validation :check_license_dates
   before_validation :check_both_dates_set
@@ -18,6 +19,7 @@ class Software < ApplicationRecord
   before_validation :check_license_end_not_passed
   before_save :calc_time_remaining
   before_save :set_expiration_status
+  before_validation :check_cost
 
   def set_expiration_status
     if self.license_end_date?
@@ -73,5 +75,15 @@ class Software < ApplicationRecord
         errors.add(:license_end_date, 'must be in the future')
       end
     end
+
+  def check_cost
+    if self.cost.is_a? Numeric
+      if self.cost < 0
+        self.errors.add(:cost, 'cannot be negative')
+      end
+    else
+      self.errors.add(:cost, 'must be a numeric value. Strings/symbols not permitted')
+    end
+  end
 
 end
