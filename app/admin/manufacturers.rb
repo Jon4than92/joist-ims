@@ -36,13 +36,18 @@ ActiveAdmin.register Manufacturer do
   end
 
   filter :name_cont, label: 'Name'
+  filter :created_at_or_updated_at, as: :date_range
+  filter :updated_at, as: :date_range
+  filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'
+  filter :updated_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Updated by'
 
-  #NOT SURE POINT OF THESE?
-  #
-  #filter :created_at_or_updated_at, as: :date_range
-  #filter :updated_at, as: :date_range
-  #filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'
-  #filter :updated_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Updated by'
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+    f.inputs do
+      f.input :name, required: true
+    end
+    f.actions
+  end
 
   show do
     attributes_table title: 'Manufacturer' do

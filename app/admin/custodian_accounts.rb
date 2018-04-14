@@ -22,7 +22,6 @@ ActiveAdmin.register CustodianAccount do
     end
   end
 
-
   index do
     selectable_column
     column 'Name' do |custodian_account|
@@ -44,6 +43,7 @@ ActiveAdmin.register CustodianAccount do
     f.inputs do
       f.input :name, required: true
     end
+    f.actions
   end
 
   filter :name_cont, label: 'Name'

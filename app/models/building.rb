@@ -5,5 +5,5 @@ class Building < ApplicationRecord
 
   accepts_nested_attributes_for :rooms
 
-  validates :name, presence: true
+  validates :name, uniqueness: true, presence: true
 end

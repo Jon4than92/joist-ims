@@ -22,8 +22,13 @@ $color-checkbox-border: #c9d0d6;
 $bg-menu-active: #7b929e !default;          // bg menu item current / hover
 $bg-sidebar: #efefef;                       // bg sidebar
 
-body.active_admin #tabs > li > a, body.active_admin #utility_nav > li > a {
-  display: inline;
+#header #utility_nav #current_account a {
+  display: inline-block;
+}
+
+body.active_admin #header ul.tabs li > a {
+  height: 100%;
+  line-height: 28px;
 }
 
 #main_content table tbody a.member_link {
@@ -31,12 +36,8 @@ body.active_admin #tabs > li > a, body.active_admin #utility_nav > li > a {
   margin-left: 3px;
 }
 
-body.active_admin #utility_nav > li:hover {
-
-}
-
 body.active_admin #header ul.tabs li.current:hover {
-  background-color: #98aab4;
+  background-color: $bg-menu-active;
 }
 
 #header ul.tabs > li:hover > a{
@@ -100,9 +101,14 @@ body.new .boolean label {
   height: 28px;
   border-radius: 3px;
   box-sizing: border-box;
-  padding: 7px;
+  padding: 0px 0px 0px 7px;
   margin-left: 20%;
   line-height: 14px;
+
+  input[type="checkbox"] {
+    position: relative;
+    top: 3px;
+  }
 }
 
 .status_tag:not(.yes):not(.no) {
@@ -128,39 +134,102 @@ body.new .boolean label {
 }
 
 .header {
-  ul.tabs li {
+  ul.tabs > li {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    #logout:hover {
-
-    }
   }
-  #tabs .current_account.has_nested ul {
+  #tabs .has_nested ul {
     li.current a {
-      display: inline !important;
+      display: inline-block !important;
       }
   }
   #utility_nav {
-    #current_account:before {
-      content: "Hello, ";
-      margin-right: -8px;
-      transition: margin-right 0.1s ease;
-      display: inline !important;
-    }
-    #current_account:hover:before {
-      margin-right: 2px;
-      transition: margin-right 0.1s ease;
-      display: inline !important;
+    #current_account {
+      a {
+        border-radius: 7px;
+
+        &:hover {
+          background: $bg-menu-active;
+        }
+      }
+      &:hover {
+        background: none !important;
+      }
+      &:before {
+        content: "Hello, ";
+        margin-right: -15px;
+        transition: margin-right 0.1s ease;
+        display: inline-block !important;
+      }
+      &:hover:before {
+        margin-right: 6px;
+        transition: margin-right 0.1s ease;
+        display: inline-block !important;
+      }
     }
     #logout:hover  {
       background-color: $color-red;
     }
-    &.current_account {
-      display: inline !important;
+    #current_account {
+      display: inline-block !important;
+
+      a {
+        display: inline-block;
+      }
     }
   }
 }
 a #current {
     display: inline !important;
+}
+
+#sidebar .numeric_range_filter {
+  input[type="number"] {
+    width: calc(50% - 10px) !important;
+    width: 45%;
+  }
+  .separator {
+    width: 20px;
+  }
+}
+
+.index_content .c-button {
+  &:not(:disabled):hover {
+    color: #fff !important;
+    text-decoration: none !important;
+  }
+}
+
+.blaze_toggle {
+  height: 35px;
+
+  label:first-child {
+    margin-top: 8px;
+  }
+}
+
+body.profile {
+  h3 {
+    margin: 0px;
+    padding: 10px;
+    background: #2c3e50;
+    color: #fff;
+  }
+  h3 + table {
+    border: 1px solid #2c3e50;
+
+    thead th {
+      background: #7b929e;
+      color: #fff;
+    }
+    tbody td:not(:last-child) {
+      border-right: 1px solid #e7e7e7;
+    }
+  }
+}
+
+body.active_admin #sidebar {
+  background: none;
+  margin-top: 25px;
 }

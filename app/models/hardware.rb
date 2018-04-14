@@ -11,8 +11,8 @@ class Hardware < ApplicationRecord
   validates :manufacturer_id, presence: true
   validates :year, presence: true, format: { with: /\A\d{4}\z/, message: 'must contain four digits' }
   validates :model_num, presence: true
-  validates :tag_num, presence: true
-  validates :serial_num, presence: true
+  validates :tag_num, uniqueness: { case_sensitive: false }, presence: true
+  validates :serial_num, uniqueness: { case_sensitive: false }, presence: true
   validates :cost, presence: true
   validates :condition, presence: true
   validates :room_id, presence: true

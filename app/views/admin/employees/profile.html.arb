@@ -22,27 +22,23 @@ attributes_table_for assigns[:employee] do
   end
 end
 
-h3 'Your Hardware'
+h3 'Your Assigned Hardware'
 table_for assigns[:hardware] do
   column :name
   column 'Manufacturer', sortable: 'manufacturers.name' do |hardware|
     hardware.name
   end
+  column :year
   column :model_num
   column :tag_num
   column :serial_num
-  column 'Cost' do |hardware|
-    number_to_currency(hardware.cost, unit: '$')
-  end
-  column 'Building', sortable: 'buildings.name' do |hardware|
-    hardware.room.building.name
-  end
-  column 'Room', sortable: 'rooms.name' do |hardware|
-    hardware.room.name
+  column :condition
+  column 'Assigned To You On' do |hardware|
+    hardware.assigned_date
   end
 end
 
-h3 'Your Software'
+h3 'Your Assigned Software'
 table_for assigns[:software] do
   column :name
   column 'Vendor', sortable: 'vendors.name' do |software|
@@ -55,11 +51,14 @@ table_for assigns[:software] do
   column 'License Status' do |software|
     status_tag software.set_expiration_status
   end
-  column 'Assigned Hardware', sortable: 'hardware.name' do |software|
+  column 'Assigned To Hardware', sortable: 'hardware.name' do |software|
     if software.hardware_id?
       software.hardware.name
     else
-      '--'
+      ''
     end
+  end
+  column 'Assigned To You On' do |software|
+    software.assigned_date
   end
 end

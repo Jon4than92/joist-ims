@@ -64,13 +64,13 @@ class Software < ApplicationRecord
 
     def check_both_dates_set
       if (self.license_start_date? and not self.license_end_date?) or (not self.license_start_date? and self.license_end_date?)
-        errors.add(:base, 'License Start Date and end date must be set at the same time!')
+        errors.add(:base, 'License start date and end date must be set at the same time')
       end
     end
 
     def check_license_end_not_passed
       if self.license_end_date < Date.today
-        errors.add(:license_end_date, 'Must be in the future!')
+        errors.add(:license_end_date, 'must be in the future')
       end
     end
 

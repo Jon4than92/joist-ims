@@ -49,17 +49,15 @@ ActiveAdmin.register Hardware do
   filter :model_num_cont, label: 'Model number'
   filter :tag_num_cont, label: 'Tag number'
   filter :serial_num_cont, label: 'Serial number'
-
+  filter :cost, as: :numeric_range_filter
   filter :condition_cont, label: 'Condition'
   filter :notes_cont, label: 'Notes'
   filter :room_name_cont, label: 'Room'
   filter :room_building_name_cont, label: 'Building'
   filter :assigned_to_first_name_or_assigned_to_middle_initial_or_assigned_to_last_name_cont, label: 'Assigned to'
-
   filter :custodian_employee_first_name_or_custodian_employee_middle_initial_or_custodian_employee_last_name_cont, label: 'Custodian'
   filter :custodian_custodian_account_name_cont, label: 'Custodian account'
 
-  #filter :cost, as: :numeric_range_filter
   #filter :assigned_date, as: :date_range, label: 'Date assigned to employee'
   #filter :created_at, as: :date_range
   #filter :updated_at, as: :date_range
@@ -80,7 +78,6 @@ ActiveAdmin.register Hardware do
       f.input :room_id, required: true, as: :nested_select,
               level_1: { attribute: :building_id, collection: Building.all },
               level_2: { attribute: :room_id, collection: Room.all }
-      #f.input :room_id, label: 'Room', as: :select, collection: Room.all.map{|u| ["#{u.building.name}.#{u.name}", u.id]}, required: true, input_html: { class: "select2" }
       f.input :assigned_to_id, label: 'Assigned to employee', as: :select, collection: Employee.all.map{|u| [u.full_name, u.id]}
       f.input :custodian_id, label: 'Assigned to custodian', as: :select, collection: Custodian.all.map{|u| ["#{u.employee.full_name}, #{u.custodian_account.name}", u.id]}
       f.input :notes, input_html: { rows: 8 }

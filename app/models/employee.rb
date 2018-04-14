@@ -36,7 +36,7 @@ class Employee < ApplicationRecord
   validates :last_name, presence: true, format: { with: /\A[a-zA-Z -.]+\z/i, message: 'cannot contain numbers or symbols' }
   validates :job_title, presence: true
   validates :room_id, presence: true
-  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'must be formatted as email@domain.com' }
+  validates :email, uniqueness: { case_sensitive: false }, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'must be formatted as email@domain.com' }
   validates :phone, presence: true, format: { with: /\A\d{3}-\d{3}-\d{4}\z/, message: 'must be formatted as ###-###-####' }
 
   def full_name

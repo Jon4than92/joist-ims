@@ -20,7 +20,6 @@ ActiveAdmin.register Vendor do
     end
   end
 
-
   index do
     selectable_column
     column 'Name' do |vendor|
@@ -32,7 +31,7 @@ ActiveAdmin.register Vendor do
       vendor.created_by_id? ? link_to(vendor.created_by.full_name, admin_employee_path(vendor.created_by)) : ''
     end
     column 'Updated by' do |vendor|
-      vendor.udpated_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : ''
+      vendor.updated_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : ''
     end
     actions
   end
@@ -42,6 +41,14 @@ ActiveAdmin.register Vendor do
   filter :updated_at, as: :date_range
   filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'
   filter :updated_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Updated by'
+
+  form do |f|
+    f.semantic_errors *f.object.errors.keys
+    f.inputs do
+      f.input :name, required: true
+    end
+    f.actions
+  end
 
   show do
     attributes_table title: 'Vendor' do
