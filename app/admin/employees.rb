@@ -43,10 +43,10 @@ ActiveAdmin.register Employee do
 
   index do
     if current_account.account_type.name == 'Standard'
-      column 'Name' do |employee|
+      column 'Name', sortable: 'employee.full_name' do |employee|
         employee.full_name
       end
-      column 'Email' do |employee|
+      column 'Email', sortable: 'employee.email' do |employee|
         mail_to (employee.email)
       end
       column :job_title
