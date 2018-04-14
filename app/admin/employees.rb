@@ -98,7 +98,7 @@ ActiveAdmin.register Employee do
     f.semantic_errors *f.object.errors.keys
     f.inputs do
     f.input :first_name, required: true
-    f.input :middle_initial
+    f.input :middle_initial, required: false
     f.input :last_name, required: true
     f.input :job_title, required: true
     if f.object.new_record?

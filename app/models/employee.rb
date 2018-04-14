@@ -32,7 +32,7 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :custodians, allow_destroy: true
 
   validates :first_name, presence: true, format: { with: /\A[a-zA-Z -]+\z/i, message: 'cannot contain numbers or symbols' }
-  validates :middle_initial, format: { with: /\A[a-zA-Z -]+\z/i, message: 'cannot contain numbers or symbols' }
+  validates :middle_initial, presence: true, format: { with: /\A[a-zA-Z -]+\z/i, message: 'cannot contain numbers or symbols' }, allow_blank: true
   validates :last_name, presence: true, format: { with: /\A[a-zA-Z -.]+\z/i, message: 'cannot contain numbers or symbols' }
   validates :job_title, presence: true
   validates :room_id, presence: true

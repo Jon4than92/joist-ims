@@ -50,7 +50,7 @@ ActiveAdmin.register Room do
     f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :name, required: true
-      f.input :building_id, label: 'Building', collection: Building.all.map{|u| [u.name, u.id]}, required: true
+      f.input :building_id, as: :select, label: 'Building', collection: Building.all.map{|u| [u.name, u.id]}, required: true
     end
     f.actions
   end
