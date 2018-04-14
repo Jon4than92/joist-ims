@@ -14,21 +14,21 @@ ActiveAdmin.register Employee do
     @software = Software.where('assigned_to_id = ?', @employee.id)
   end
 
-  before_save do |employee|
-    employee.created_by_id = current_account.employee_id if employee.new_record?
-    employee.updated_by_id = current_account.employee_id if !employee.new_record?
-  end
-
   controller do
     def scoped_collection
       end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
+    end
+
+    before_save do |employee|
+      employee.created_by_id = current_account.employee_id if employee.new_record?
+      employee.updated_by_id = current_account.employee_id if !employee.new_record?
     end
 
     before_action :check_account_type, only: [:new, :edit, :update, :destroy]
     def check_account_type
       if current_account.account_type.name == 'Standard'
         flash[:error] = 'You don\'t have access to that page.'
-        redirect_to admin_profile_path(current_account)
+        redirect_to profile_admin_employee_path(current_account)
       end
     end
 
@@ -41,15 +41,14 @@ ActiveAdmin.register Employee do
     end
   end
 
-  #scope_to :current_account, if: proc{ current_account.account_type.name == 'Standard' }
- # scope_to :current_account, unless: proc{ current_account.account_type.name == 'Custodian' || current_account.account_type.name == 'Management' }
-
   index do
     if current_account.account_type.name == 'Standard'
       column 'Name' do |employee|
         employee.full_name
       end
-      column :email
+      column 'Email' do |employee|
+        mail_to (employee.email)
+      end
       column :job_title
       column :phone
       column 'Building', sortable: 'buildings.name' do |employee|
@@ -63,7 +62,9 @@ ActiveAdmin.register Employee do
       column :full_name do |employee|
         link_to employee.full_name, admin_employee_path(employee)
       end
-      column :email
+      column 'Email' do |employee|
+        mail_to (employee.email)
+      end
       column :job_title
       column :phone
       column 'Building', sortable: 'buildings.name' do |employee|
@@ -82,7 +83,7 @@ ActiveAdmin.register Employee do
   filter :phone_cont, label: 'Phone'
   filter :room_name_cont, label: 'Room'
   filter :room_building_name_cont, label: 'Building'
-  filter :active, as: :check_boxes, collection: [['Inactive account', false]], label: '',
+  filter :active, as: :blaze_toggle,  input_html: { toggle_class: 'c-toggle--brand' }, collection: [['Inactive account', false]], label: 'Show Inactive Employees?',
          if: proc { current_account.account_type.name != 'Standard' }
   filter :created_at, as: :date_range,
          if: proc { current_account.account_type.name != 'Standard' }
@@ -122,7 +123,9 @@ ActiveAdmin.register Employee do
     attributes_table title: 'Employee' do
       row :full_name
       row :job_title
-      row :email
+      row :email do |employee|
+        mail_to (employee.email)
+      end
       row :phone, as: :phone
       row 'Building' do |employee|
         link_to employee.room.building.name, admin_building_path(employee.room.building)

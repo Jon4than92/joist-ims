@@ -12,18 +12,17 @@ ActiveAdmin.register Software do
   scope :license_valid do |software|
     software.where('license_end_date > ?', Date.today + 3.months)
   end
-  scope :expiring_soon do |software|
-    software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)
-  end
   scope :renewal_urgent do |software|
     software.where('license_end_date <= ? and license_end_date > ?', Date.today + 1.month, Date.today)
+  end
+  scope :expiring_soon do |software|
+    software.where('license_end_date > ? and license_end_date <= ?', Date.today + 1.month, Date.today + 3.months)
   end
   scope :license_expired do |software|
     software.where('license_end_date <= ?', Date.today)
   end
 
   controller do
-
     before_save do |software|
       software.created_by_id = current_account.employee_id if software.new_record?
       software.updated_by_id = current_account.employee_id if !software.new_record?
@@ -60,7 +59,7 @@ ActiveAdmin.register Software do
         if software.calc_time_remaining > 0
           "#{software.calc_time_remaining} days"
         else
-          ''
+          '--'
         end
       end
     end
@@ -82,17 +81,16 @@ ActiveAdmin.register Software do
   filter :vendor_name_cont, label: 'Vendor'
   filter :version_cont, label: 'Version'
   filter :year, as: :numeric_range_filter
-  filter :license_start_date, label: 'License start date', as: :date_range
-  filter :license_end_date, label: 'License end date', as: :date_range
+  filter :license_start_date_and_license_end_date, label: 'License Date Range', as: :date_range # filters date range
   filter :license_key_cont, label: 'License key'
-  filter :cost, as: :numeric_range_filter
+  #filter :cost, as: :numeric_range_filter
   filter :hardware_name_cont, label: 'Assigned to hardware'
   filter :assigned_to_first_name_or_assigned_to_middle_initial_or_assigned_to_last_name_cont, label: 'Assigned to employee'
-  filter :assigned_date, as: :date_range, label: 'Date assigned to employee'
+  #filter :assigned_date, as: :date_range, label: 'Date assigned to employee'
   filter :custodian_employee_first_name_or_custodian_employee_middle_initial_or_custodian_employee_last_name_cont, label: 'Assigned to custodian'
   filter :active, as: :check_boxes, collection: [['Inactive license', false]], label: ''
-  filter :created_at, as: :date_range
-  filter :updated_at, as: :date_range
+  #filter :created_at, as: :date_range
+  #filter :updated_at, as: :date_range
   filter :created_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Created by'
   filter :updated_by_first_name_or_created_by_middle_initial_or_created_by_last_name_cont, label: 'Updated by'
 

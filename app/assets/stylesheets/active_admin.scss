@@ -9,18 +9,42 @@
 // $sidebar-width: 242px;
 
 // Active Admin's got SASS!
+@import "activeadmin_blaze_theme/theme";
 @import "active_admin/mixins";
 @import "active_admin/base";
-@import "activeadmin_blaze_theme/theme";
+
 
 $color-green: #38bc33;
 $color-orange: #ff8c00;
 $color-red: #ff2825;
 $color-lightblue: #5796da;
 $color-checkbox-border: #c9d0d6;
+$bg-menu-active: #7b929e !default;          // bg menu item current / hover
+$bg-sidebar: #efefef;                       // bg sidebar
 
 body.active_admin #tabs > li > a, body.active_admin #utility_nav > li > a {
-  display: inline !important;
+  display: inline;
+}
+
+#main_content table tbody a.member_link {
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+body.active_admin #utility_nav > li:hover {
+
+}
+
+body.active_admin #header ul.tabs li.current:hover {
+  background-color: #98aab4;
+}
+
+#header ul.tabs > li:hover > a{
+  background: none;
+}
+
+#header ul.tabs > li.current > a {
+  background: none !important;
 }
 
 #main_content table tbody a {
@@ -104,11 +128,18 @@ body.new .boolean label {
 }
 
 .header {
-  #tabs .current.has_nested ul {
-    li.current a {
-      background: #686f74 !important;
-      display: inline !important;
+  ul.tabs li {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    #logout:hover {
+
     }
+  }
+  #tabs .current_account.has_nested ul {
+    li.current a {
+      display: inline !important;
+      }
   }
   #utility_nav {
     #current_account:before {
@@ -118,11 +149,11 @@ body.new .boolean label {
       display: inline !important;
     }
     #current_account:hover:before {
-      margin-right: 0px;
+      margin-right: 2px;
       transition: margin-right 0.1s ease;
       display: inline !important;
     }
-    #logout:hover a {
+    #logout:hover  {
       background-color: $color-red;
     }
     &.current_account {
