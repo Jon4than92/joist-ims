@@ -45,6 +45,8 @@ class Software < ApplicationRecord
         if self.license_end_date < self.license_start_date
           errors.add(:license_end_date, 'must be after license start date')
         end
+      else self.license_start_date.is_blank? || self.license_end_date.is_blank?
+          errors.add(:license_start_date_or_license_end_date, 'cannot be blank')
       end
     end
 
