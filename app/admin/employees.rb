@@ -6,22 +6,31 @@ ActiveAdmin.register Employee do
                 account_types_attributes: [:id, :name, :_destroy],
                 custodians_attributes: [:id, :employee_id, :custodian_account_id, :_destroy]
 
+
+
   config.sort_order = 'last_name_desc'
 
-  member_action :profile do
-    @employee = current_account.employee
-    @hardware = Hardware.where('assigned_to_id = ?', @employee.id)
-    @software = Software.where('assigned_to_id = ?', @employee.id)
-  end
+  member_action :profile
 
   controller do
     def scoped_collection
       end_of_association_chain.includes(custodians: :custodian_account, room: :building, account: :account_type)
     end
 
+    def profile
+      @page_title = 'My Profile'
+      @employee = current_account.employee
+      @hardware = Hardware.where('assigned_to_id = ?', @employee.id)
+      @software = Software.where('assigned_to_id = ?', @employee.id)
+    end
+
     before_save do |employee|
       employee.created_by_id = current_account.employee_id if employee.new_record?
       employee.updated_by_id = current_account.employee_id if !employee.new_record?
+
+      employee.custodians.each do |custodian|
+        custodian.created_by_id = current_account.employee_id
+      end
     end
 
     before_action :check_account_type, only: [:new, :edit, :update, :destroy]
@@ -29,14 +38,6 @@ ActiveAdmin.register Employee do
       if current_account.account_type.name == 'Standard'
         flash[:error] = 'You don\'t have access to that page.'
         redirect_to profile_admin_employee_path(current_account)
-      end
-    end
-
-    #before_action :check_user_for_profile, only: :profile
-    def check_user_for_profile
-      if current_account.account_type.name == 'Standard' and current_account.employee_id != params[:id].to_i
-        flash[:error] = 'You don\'t have access to that page.'
-        redirect_to admin_profile_path(current_account)
       end
     end
   end

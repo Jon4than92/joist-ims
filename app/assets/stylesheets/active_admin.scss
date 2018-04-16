@@ -96,14 +96,13 @@ abbr[title] {
 }
 
 body.edit .boolean label,
-body.new .boolean label {
+body.new:not(.logged_out) .boolean label {
   border: 1px solid $color-checkbox-border;
   height: 28px;
   border-radius: 3px;
   box-sizing: border-box;
   padding: 0px 0px 0px 7px;
   margin-left: 20%;
-  line-height: 14px;
 
   input[type="checkbox"] {
     position: relative;
@@ -232,4 +231,21 @@ body.profile {
 body.active_admin #sidebar {
   background: none;
   margin-top: 25px;
+}
+
+body.active_admin.logged_out {
+  form fieldset.inputs label {
+    line-height: initial;
+  }
+
+  form > fieldset.inputs > ol {
+    background: none;
+    box-shadow: none;
+    padding: 0px;
+
+    li.boolean label {
+      padding: 0px;
+      border: none;
+    }
+  }
 }

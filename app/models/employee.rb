@@ -12,7 +12,6 @@ class Employee < ApplicationRecord
   has_many :assigned_software, class_name: 'Software', foreign_key: :assigned_to_id
   has_many :updated_software, class_name: 'Software', foreign_key: :updated_by_id
   has_many :created_software, class_name: 'Software', foreign_key: :created_by_id
-  has_many :updated_custodian, class_name: 'Custodian', foreign_key: :updated_by_id
   has_many :created_custodian, class_name: 'Custodian', foreign_key: :created_by_id
   has_many :updated_custodian_account, class_name: 'CustodianAccount', foreign_key: :updated_by_id
   has_many :created_custodian_account, class_name: 'CustodianAccount', foreign_key: :created_by_id

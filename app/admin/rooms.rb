@@ -58,6 +58,9 @@ ActiveAdmin.register Room do
   show do
     attributes_table title: 'Room' do
       row :name
+      row :building_id, label: 'Building' do |room|
+        link_to room.building.name, admin_building_path(room.building)
+      end
     end
 
     attributes_table title: 'Metadata' do

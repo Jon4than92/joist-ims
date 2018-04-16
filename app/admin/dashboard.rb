@@ -12,6 +12,9 @@ ActiveAdmin.register_page 'Dashboard' do
   end
 
   content title: 'Dashboard' do
+    @fiscal_year_start = Date.new(Date.today.year, 1, 1)
+    @fiscal_year_end = Date.new(1.year.from_now.year, 12, 31)
+
     columns do
       column do
         panel 'Total Software Licenses (Active/Inactive)' do
@@ -29,18 +32,14 @@ ActiveAdmin.register_page 'Dashboard' do
     columns do
       column do
         panel 'Total Asset Value (Cost) for the Current Fiscal Year' do
-          fiscal_year_start = Date.new(Date.today.year, 1, 1)
-          fiscal_year_end = Date.new(1.year.from_now.year, 12, 31)
-          data = [['Hardware', Hardware.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost)], ['Software', Software.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost)]]
+          data = [['Hardware', Hardware.where('created_at BETWEEN ? AND ?', @fiscal_year_start, @fiscal_year_end).sum(:cost)], ['Software', Software.where('created_at BETWEEN ? AND ?', @fiscal_year_start, @fiscal_year_end).sum(:cost)]]
           pie_chart data, messages: { empty: 'No data' }
         end
       end
     end
 
     div class: 'panel' do
-      fiscal_year_start = Date.new(Date.today.year, 1, 1)
-      fiscal_year_end = Date.new(1.year.from_now.year, 12, 31)
-      h3 "Total Assets Value: #{ number_to_currency  total_asset_value = (Hardware.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost) + Software.where('created_at BETWEEN ? AND ?', fiscal_year_start, fiscal_year_end).sum(:cost)) }"
+      h3 "Total Assets Value: #{ number_to_currency  total_asset_value = (Hardware.where('created_at BETWEEN ? AND ?', @fiscal_year_start, @fiscal_year_end).sum(:cost) + Software.where('created_at BETWEEN ? AND ?', @fiscal_year_start, @fiscal_year_end).sum(:cost)) }"
     end
 
   end

@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 12) do
     t.bigint "account_type_id", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
@@ -40,7 +38,6 @@ ActiveRecord::Schema.define(version: 12) do
     t.index ["account_type_id"], name: "index_accounts_on_account_type_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["employee_id"], name: "index_accounts_on_employee_id"
-    t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
   create_table "buildings", force: :cascade do |t|
@@ -70,12 +67,10 @@ ActiveRecord::Schema.define(version: 12) do
     t.bigint "custodian_account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "updated_by_id"
     t.bigint "created_by_id"
     t.index ["created_by_id"], name: "index_custodians_on_created_by_id"
     t.index ["custodian_account_id"], name: "index_custodians_on_custodian_account_id"
     t.index ["employee_id"], name: "index_custodians_on_employee_id"
-    t.index ["updated_by_id"], name: "index_custodians_on_updated_by_id"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -193,7 +188,6 @@ ActiveRecord::Schema.define(version: 12) do
   add_foreign_key "custodian_accounts", "employees", column: "updated_by_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "custodians", "custodian_accounts", on_update: :cascade, on_delete: :cascade
   add_foreign_key "custodians", "employees", column: "created_by_id", on_update: :cascade, on_delete: :nullify
-  add_foreign_key "custodians", "employees", column: "updated_by_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "custodians", "employees", on_update: :cascade, on_delete: :cascade
   add_foreign_key "employees", "employees", column: "created_by_id", on_update: :cascade, on_delete: :nullify
   add_foreign_key "employees", "employees", column: "updated_by_id", on_update: :cascade, on_delete: :nullify

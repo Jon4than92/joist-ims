@@ -18,7 +18,6 @@ class AddEmployeeReferences < ActiveRecord::Migration[5.1]
     add_reference :employees, :updated_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
     add_reference :employees, :created_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
 
-    add_reference :custodians, :updated_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
     add_reference :custodians, :created_by, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
 
     add_reference :hardware, :assigned_to, foreign_key: { to_table: :employees, on_update: :cascade, on_delete: :nullify }
