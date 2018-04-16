@@ -10,7 +10,7 @@ class Software < ApplicationRecord
   validates :vendor_id, presence: true
   validates :version, presence: true
   validates :year, presence: true, format: { with: /\A\d{4}\z/, message: 'must contain only four digits' }
-  #validates_numericality_of :cost, presence: true, only_integer: true
+  validates :cost, presence: true
 
   before_validation :check_license_dates
   before_validation :check_both_dates_set
@@ -45,8 +45,8 @@ class Software < ApplicationRecord
         if self.license_end_date < self.license_start_date
           errors.add(:license_end_date, 'must be after license start date')
         end
-      else self.license_start_date.is_blank? || self.license_end_date.is_blank?
-          errors.add(:license_start_date_or_license_end_date, 'cannot be blank')
+      else self.license_start_date.blank? || self.license_end_date.blank?
+          errors.add(:license_start_date_and_license_end_date, 'cannot be blank')
       end
     end
 
@@ -73,8 +73,12 @@ class Software < ApplicationRecord
     end
 
     def check_license_end_not_passed
-      if self.license_end_date < Date.today
-        errors.add(:license_end_date, 'must be in the future')
+      if self.license_end_date.blank?
+        errors.add(:license_end_date, 'cannot be blank if you have a License Start Date')
+      else
+        if self.license_end_date < Date.today
+          errors.add(:license_end_date, 'must be in the future')
+        end
       end
     end
 

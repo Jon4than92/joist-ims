@@ -13,7 +13,7 @@ class Hardware < ApplicationRecord
   validates :model_num, presence: true
   validates :tag_num, uniqueness: { case_sensitive: false }, presence: true
   validates :serial_num, uniqueness: { case_sensitive: false }, presence: true
-  #validates_numericality_of  :cost, presence: true, only_integer: true
+  validates :cost, presence: true
   validates :condition, presence: true
   validates :room_id, presence: true
 
@@ -23,10 +23,12 @@ class Hardware < ApplicationRecord
 
   private
     def check_year
-      if self.year > Date.today.year
-        self.errors.add(:year, 'cannot be greater than ' + Date.today.year)
-      elsif self.year < 0
-        self.errors.add(:year, 'cannot be negative')
+      if self.cost.is_a? Numeric
+        if self.year > Date.today.year
+          self.errors.add(:year, 'cannot be greater than ' + Date.today.year)
+        elsif self.year < 0
+          self.errors.add(:year, 'cannot be negative')
+        end
       end
     end
 

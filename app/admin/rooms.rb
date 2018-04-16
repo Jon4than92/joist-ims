@@ -31,10 +31,10 @@ ActiveAdmin.register Room do
     column :created_at
     column :updated_at
     column 'Created by' do |room|
-      room.created_by_id? ? link_to(room.created_by.full_name, admin_employee_path(room.created_by)) : ''
+      room.created_by_id? ? link_to(room.created_by.full_name, admin_employee_path(room.created_by)) : 'Deleted User'
     end
     column 'Updated by' do |room|
-      room.updated_by_id? ? link_to(room.updated_by.full_name, admin_employee_path(room.updated_by)) : ''
+      room.updated_by_id? ? link_to(room.updated_by.full_name, admin_employee_path(room.updated_by)) : 'Deleted User'
     end
     actions
   end

@@ -28,10 +28,10 @@ ActiveAdmin.register Vendor do
     column :created_at
     column :updated_at
     column 'Created by' do |vendor|
-      vendor.created_by_id? ? link_to(vendor.created_by.full_name, admin_employee_path(vendor.created_by)) : ''
+      vendor.created_by_id? ? link_to(vendor.created_by.full_name, admin_employee_path(vendor.created_by)) : 'Deleted User'
     end
     column 'Updated by' do |vendor|
-      vendor.updated_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : ''
+      vendor.updated_by_id? ? link_to(vendor.updated_by.full_name, admin_employee_path(vendor.updated_by)) : 'Deleted User'
     end
     actions
   end

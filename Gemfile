@@ -20,7 +20,6 @@ gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'chartkick'
 gem 'groupdate'
-gem 'cancancan'
 gem 'whenever', require: false
 gem 'activeadmin_blaze_theme'
 

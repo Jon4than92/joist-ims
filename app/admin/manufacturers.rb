@@ -27,10 +27,10 @@ ActiveAdmin.register Manufacturer do
     column :created_at
     column :updated_at
     column 'Created by' do |manufacturer|
-      manufacturer.created_by_id? ? link_to(manufacturer.created_by.full_name, admin_employee_path(manufacturer.created_by)) : ''
+      manufacturer.created_by_id? ? link_to(manufacturer.created_by.full_name, admin_employee_path(manufacturer.created_by)) : 'Deleted User'
     end
     column 'Updated by' do |manufacturer|
-      manufacturer.updated_by_id? ? link_to(manufacturer.updated_by.full_name, admin_employee_path(manufacturer.updated_by)) : ''
+      manufacturer.updated_by_id? ? link_to(manufacturer.updated_by.full_name, admin_employee_path(manufacturer.updated_by)) : 'Deleted User'
     end
     actions
   end

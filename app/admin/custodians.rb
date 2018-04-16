@@ -30,7 +30,7 @@ ActiveAdmin.register Custodian do
     end
     column :created_at
     column 'Created by' do |custodian|
-      custodian.created_by_id? ? link_to(custodian.created_by.full_name, admin_employee_path(custodian.created_by)) : ''
+      custodian.created_by_id? ? link_to(custodian.created_by.full_name, admin_employee_path(custodian.created_by)) : 'Deleted User'
     end
   end
 
