@@ -145,7 +145,7 @@ body.new:not(.logged_out) .boolean label {
   }
   #utility_nav {
     #current_account {
-      a {
+      & > a {
         border-radius: 7px;
 
         &:hover {
@@ -154,17 +154,6 @@ body.new:not(.logged_out) .boolean label {
       }
       &:hover {
         background: none !important;
-      }
-      &:before {
-        content: "Hello, ";
-        margin-right: -15px;
-        transition: margin-right 0.1s ease;
-        display: inline-block !important;
-      }
-      &:hover:before {
-        margin-right: 6px;
-        transition: margin-right 0.1s ease;
-        display: inline-block !important;
       }
     }
     #logout:hover  {
@@ -247,5 +236,32 @@ body.active_admin.logged_out {
       padding: 0px;
       border: none;
     }
+  }
+}
+
+body.show.admin_employees #sidebar a[href$="reset_password"],
+body.edit.admin_employees #sidebar a[href$="reset_password"] {
+  text-decoration: none;
+  background: #f44336;
+  color: #fff;
+  padding: 6px;
+  border-radius: 4px;
+
+  &:hover {
+    background: #ff665a;
+  }
+}
+
+#header #utility_nav li.has_nested li {
+  display: block;
+}
+
+#sidebar ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+
+  li:first-child {
+    margin: 5px 0px 10px 0px;
   }
 }

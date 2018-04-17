@@ -240,10 +240,17 @@ ActiveAdmin.setup do |config|
     end
 
     admin.build_menu :utility_navigation do |menu|
-      menu.add label: proc { display_name current_active_admin_user.employee.full_name },
-               url: -> { profile_admin_employee_path(current_account.employee) },
-               id: 'current_account',
-               if: proc { current_active_admin_user? }
+      menu.add label: proc { 'Hello, ' + (display_name current_active_admin_user.employee.full_name) },
+               id: 'current_account'
+      menu.add label: 'My Profile',
+               url: proc { profile_admin_employee_path(current_account.employee) },
+               if: proc { current_active_admin_user? },
+               parent: 'current_account',
+               priority: 1
+      menu.add label: 'Change Password',
+               url: proc { edit_admin_account_path(current_account) },
+               parent: 'current_account',
+               priority: 2
       admin.add_logout_button_to_menu menu
     end
   end

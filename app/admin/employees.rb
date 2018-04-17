@@ -6,11 +6,10 @@ ActiveAdmin.register Employee do
                 account_types_attributes: [:id, :name, :_destroy],
                 custodians_attributes: [:id, :employee_id, :custodian_account_id, :_destroy]
 
-
-
   config.sort_order = 'last_name_desc'
 
   member_action :profile
+  member_action :reset_password
 
   controller do
     def scoped_collection
@@ -22,6 +21,13 @@ ActiveAdmin.register Employee do
       @employee = current_account.employee
       @hardware = Hardware.where('assigned_to_id = ?', @employee.id)
       @software = Software.where('assigned_to_id = ?', @employee.id)
+    end
+
+    def reset_password
+      employee = Employee.find(params[:id])
+      employee.account.reset_password
+      flash[:notice] = "Password sucessfully reset for #{employee.full_name}."
+      redirect_to admin_employee_path(id: params[:id])
     end
 
     before_save do |employee|
@@ -37,8 +43,22 @@ ActiveAdmin.register Employee do
     def check_account_type
       if current_account.account_type.name == 'Standard'
         flash[:error] = 'You don\'t have access to that page.'
+        redirect_to admin_employees_path
+      end
+    end
+
+    before_action :check_profile_owner, only: :profile
+    def check_profile_owner
+      if current_account.employee_id != params[:id].to_i
         redirect_to profile_admin_employee_path(current_account)
       end
+    end
+  end
+
+  sidebar 'Password Management', only: [:show, :edit], if: proc { current_account.account_type.name == 'Management' } do
+    ul do
+      li link_to 'Reset Password', reset_password_admin_employee_path(employee), data: { confirm: 'Reset employee\'s password to the default password? This action cannot be undone. The employee should immediately login and change their password after this is done.' }
+      li 'Default password: password'
     end
   end
 
