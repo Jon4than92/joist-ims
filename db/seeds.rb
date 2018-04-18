@@ -68,12 +68,12 @@ Custodian.create!([
 ])
 
 Hardware.create!([
-    { name: '10K PC', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, custodian_id: 2 },
-    { name: 'MacBook', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, custodian_id: 3 }
+    { name: 'HP G200 Desktop', manufacturer_id: 4, year: 2017, model_num: 'AA321', tag_num: '210103', serial_num: 'ACG2111V31', cost: 10000, condition: 'New', room_id: 2, custodian_id: 2 },
+    { name: 'MacBook Pro', manufacturer_id: 2, year: 2010, model_num: '53JX9', tag_num: '210177', serial_num: 'VBR4H669WE', cost: 1500, condition: 'Used', room_id: 5, custodian_id: 3 }
 ])
 
 Software.create!([
-    { name: 'Word', vendor_id: 2, version: '2015.64.1_A', year: 2015, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2019,8,5), hardware_id: 1, custodian_id: 1, cost: 1500, license_key: 'A231-234AS-5E6TC-ZDSA64' },
-    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,5,26), hardware_id: 2, custodian_id: 3, cost: 1200, license_key: '1111-234AS-455DC-D454S' },
-    { name: '3dsMax', vendor_id: 3, version: '7.2.1_R3', year: 2018, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,3,11), hardware_id: 1, custodian_id: 2, cost: 1500, license_key: '1111-234AS-455DC-D454S' }
+    { name: 'Word', vendor_id: 2, version: '2015.64.1_A', year: 2015, license_start_date: Date.new(2015,9,1), license_end_date: Date.new(2019,8,5), hardware_id: 1, custodian_id: 1, cost: 100, license_key: 'A231-234AS-5E6TC-ZDSA64' },
+    { name: 'Photoshop CC', vendor_id: 4, version: '2017.1.20', year: 2017, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,5,26), hardware_id: 2, custodian_id: 3, cost: 800, license_key: '1111-234AS-455DC-D454S' },
+    { name: '3dsMax', vendor_id: 3, version: '7.2.1_R3', year: 2018, license_start_date: Date.new(2018,3,11), license_end_date: Date.new(2019,3,11), hardware_id: 1, custodian_id: 2, cost: 1200, license_key: '1111-234AS-455DC-D454S' }
 ])

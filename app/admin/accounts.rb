@@ -45,7 +45,6 @@ ActiveAdmin.register Account do
     f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :password, label: 'Current password', required: true
-      f.input :password_confirmation, label: 'Retype current password', required: true
       f.input :new_password, required: true, hint: 'Must contain at least 8 characters including a lowercase letter, an uppercase letter, and a symbol'
       f.input :new_password_confirmation, label: 'Retype new password', required: true
     end
