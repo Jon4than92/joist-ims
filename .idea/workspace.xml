@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b59315df-00c6-4197-a81f-69da1c5007d9" name="Default" comment="Cleaned up names on dashboard // added total asset value in its own panel for placeholder&#10;&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="b59315df-00c6-4197-a81f-69da1c5007d9" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/joist-ims.iml" beforeDir="false" afterPath="$PROJECT_DIR$/joist-ims.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
@@ -83,8 +83,8 @@
       <file leaf-file-name="Gemfile" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            <state relative-caret-position="467">
+              <caret line="34" column="3" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -205,7 +205,6 @@
         <option value="$PROJECT_DIR$/app/admin/vendors.rb" />
         <option value="$PROJECT_DIR$/app/models/software.rb" />
         <option value="$PROJECT_DIR$/app/models/hardware.rb" />
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/config/initializers/active_admin.rb" />
         <option value="$PROJECT_DIR$/config/initializers/devise.rb" />
         <option value="$PROJECT_DIR$/app/views/admin/employees/profile.html.arb" />
@@ -216,6 +215,7 @@
         <option value="$PROJECT_DIR$/app/models/account.rb" />
         <option value="$PROJECT_DIR$/app/admin/employees.rb" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/active_admin.scss" />
+        <option value="$PROJECT_DIR$/Gemfile" />
       </list>
     </option>
   </component>
@@ -235,11 +235,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1425" />
+    <option name="width" value="1936" />
+    <option name="height" value="1176" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -398,7 +398,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Rails.Development: joist-ims">
+  <component name="RunManager" selected="Heroku Deployment.joistitam">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
     </configuration>
@@ -958,6 +958,13 @@
       <envs />
       <method />
     </configuration>
+    <configuration name="joistitam" type="heroku-deploy" factoryName="Heroku Deployment" server-name="Heroku">
+      <deployment type="module" name="joist-ims">
+        <settings>
+          <option name="host" value="" />
+        </settings>
+      </deployment>
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -967,11 +974,12 @@
       <envs />
     </configuration>
     <list>
-      <item itemvalue="Rake.test: joist-ims" />
-      <item itemvalue="Rake.spec: joist-ims" />
+      <item itemvalue="Heroku Deployment.joistitam" />
       <item itemvalue="Rails.Production: joist-ims" />
       <item itemvalue="Rails.Development: joist-ims" />
       <item itemvalue="Rails.Test: joist-ims" />
+      <item itemvalue="Rake.test: joist-ims" />
+      <item itemvalue="Rake.spec: joist-ims" />
       <item itemvalue="Rake.db:seed: joist-ims" />
       <item itemvalue="Rake.db:reset: joist-ims" />
       <item itemvalue="Rake.db:environment:set: joist-ims" />
@@ -1027,7 +1035,7 @@
       <workItem from="1523924025084" duration="2560000" />
       <workItem from="1523977981208" duration="599000" />
       <workItem from="1524024809346" duration="43000" />
-      <workItem from="1524024873476" duration="723000" />
+      <workItem from="1524024873476" duration="1500000" />
     </task>
     <task id="LOCAL-00001" summary="Pushing merge of Hardware/Manufacture pages for Adam. New Harware needs debugging still.">
       <created>1522702454850</created>
@@ -1106,7 +1114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1523926002431</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="pushing gem clean&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml">
+      <created>1524025851818</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1524025851818</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1115,7 +1130,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="494846000" />
+    <option name="totallyTimeSpent" value="495623000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1139,15 +1154,15 @@
       <window_info anchor="bottom" id="Application Servers" weight="0.3297244" />
       <window_info anchor="right" id="Maven Projects" order="14" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32874015" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4978678" weight="0.27897838" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32874015" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4978678" weight="0.2785433" />
       <window_info anchor="bottom" x="713" y="679" width="1015" height="398" id="Terminal" order="10" weight="0.28623188" />
       <window_info id="Capture Tool" order="11" />
       <window_info id="Designer" order="12" />
       <window_info content_ui="combo" id="Project" order="9" visible="true" weight="0.3219616" />
       <window_info anchor="bottom" id="Statistic" order="12" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info active="true" anchor="right" id="Database" order="10" visible="true" weight="0.3379531" />
+      <window_info anchor="right" id="Database" order="10" visible="true" weight="0.3379531" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info id="UI Designer" order="14" />
@@ -1229,7 +1244,8 @@
     <MESSAGE value="Cleaned up names on dashboard // added total asset value in its own panel for placeholder&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="Resolved data input errors on software/hardware models.&#10;Added deleted user on lists pages instead of blank space.&#10;removed gem files not in use&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="Revised to JOIST ITAM&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revised to JOIST ITAM&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="pushing gem clean&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="pushing gem clean&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1405,8 +1421,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="467">
+          <caret line="34" column="3" lean-forward="true" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -1567,7 +1583,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Ruby on Rails</last-edited>
+          <last-edited />
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1579,7 +1595,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>actioncable (v5.1.4, ruby-2.4.1-p111) [gem]</last-edited>
+          <last-edited />
           <splitter-proportions>
             <option name="proportions">
               <list>
